@@ -83,6 +83,13 @@ def create_grievance_chapter_docx():
     p_arch_desc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     p_arch_desc.paragraph_format.first_line_indent = Inches(0.5)
 
+    p_img = doc.add_paragraph()
+    p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_img.paragraph_format.space_before = Pt(8)
+    p_img.paragraph_format.space_after = Pt(4)
+    r_img = p_img.add_run()
+    r_img.add_picture("architecture_diagram_drawio.png", width=Inches(6.2))
+
     p_fig1 = doc.add_paragraph()
     r = p_fig1.add_run("Figure 8.1: Multi-Tier Statutory Student Grievance Redressal Architecture")
     r.italic = True
@@ -189,7 +196,9 @@ def create_grievance_chapter_docx():
     p_fig4.paragraph_format.space_after = Pt(12)
 
     doc.save("CHAPTER_8_STUDENT_GRIEVANCE_REPORT.docx")
-    print("Successfully created CHAPTER_8_STUDENT_GRIEVANCE_REPORT.docx")
+    import shutil, os
+    shutil.copy("CHAPTER_8_STUDENT_GRIEVANCE_REPORT.docx", os.path.join("public", "CHAPTER_8_STUDENT_GRIEVANCE_REPORT.docx"))
+    print("Successfully created CHAPTER_8_STUDENT_GRIEVANCE_REPORT.docx and copied to public/")
 
 if __name__ == '__main__':
     create_grievance_chapter_docx()

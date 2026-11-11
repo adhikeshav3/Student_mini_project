@@ -1,9 +1,10 @@
 import os
 import sys
+import shutil
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, HRFlowable, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, HRFlowable, Spacer, Image, PageBreak
 import pypdf
 
 def generate_grievance_chapter_pdf():
@@ -117,6 +118,7 @@ def generate_grievance_chapter_pdf():
     story.append(Paragraph(p2, body_style))
 
     # 2. System Architecture
+    story.append(PageBreak())
     story.append(Paragraph("2. System Architecture", section_style))
     p3 = (
         "The system architecture employs an autonomous, multi-tier agentic pipeline designed to separate sensitive student intake "
@@ -127,6 +129,11 @@ def generate_grievance_chapter_pdf():
         "Escalation Dispatcher (Automated legal resolution decree generator, SLA compliance watchdog, and 3-tier Ombudsperson escalation bench)."
     )
     story.append(Paragraph(p3, body_style))
+    img_w = 480
+    img_h = img_w / (14.0 / 9.2)
+    story.append(Spacer(1, 4))
+    story.append(Image("architecture_diagram_drawio.png", width=img_w, height=img_h))
+    story.append(Spacer(1, 2))
     story.append(Paragraph("Figure 8.1: Multi-Tier Statutory Student Grievance Redressal Architecture", caption_style))
 
     # 3. Implementation
@@ -228,9 +235,10 @@ def generate_grievance_chapter_pdf():
 
     doc.build(story)
 
+    shutil.copy(pdf_filename, os.path.join("public", pdf_filename))
     reader = pypdf.PdfReader(pdf_filename)
     total_pages = len(reader.pages)
-    print(f"Generated '{pdf_filename}' with {total_pages} page(s).")
+    print(f"Generated '{pdf_filename}' with {total_pages} page(s) and copied to public/.")
     return total_pages
 
 if __name__ == '__main__':
