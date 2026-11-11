@@ -23,17 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 __pycache__/
-
-# Document and report deliverables (excluded from repository)
-*.pdf
-*.docx
-*.pptx
-*.py
-*.png
-slides.html
-PPT_SLIDE_CONTENT.md
-PRESENTATION_GUIDE_AND_SCRIPT.md
-SYSTEM_DOCUMENTATION.md
-public/*.pdf
-public/*.docx
-public/*.png

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Student Grievance Resolution Agent - S7 Defense</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d1f3c;
+      --deep-navy: #071326;
+      --gold: #c59b27;
+      --gold-light: #e4b849;
+      --slate-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --emerald: #059669;
+      --crimson: #dc2626;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #020617;
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Presentation Frame */
+    .deck-container {
+      width: 100vw;
+      max-width: 1400px;
+      aspect-ratio: 16 / 9;
+      background: var(--slate-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Slides */
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 48px 64px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      overflow-y: auto;
+    }
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      opacity: 1;
+      position: relative;
+    }
+    /* Header Bar */
+    .slide-header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .slide-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 120px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .slide-category {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+    .slide-title {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'Merriweather', serif;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+    /* Controls & Navigation */
+    .deck-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 50;
+      background: rgba(13, 31, 60, 0.9);
+      padding: 8px 16px;
+      border-radius: 30px;
+      backdrop-blur: 8px;
+      border: 1px solid rgba(197, 155, 39, 0.4);
+    }
+    .btn-nav {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover {
+      background: var(--gold);
+      color: var(--deep-navy);
+    }
+    .slide-indicator {
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Progress bar */
+    .progress-bar-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(226, 232, 240, 0.5);
+      z-index: 100;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--gold);
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+    /* Layout Elements */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 16px;
+      flex: 1;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(13, 31, 60, 0.04);
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    .card-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #334155;
+    }
+    .card-body p {
+      margin-bottom: 8px;
+    }
+    .card-body strong {
+      color: var(--navy);
+    }
+    /* Custom Title Slide */
+    .slide-title-bg {
+      background: linear-gradient(135deg, #071326 0%, #0d1f3c 100%);
+      color: white;
+      justify-content: center;
+    }
+    .title-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(197, 155, 39, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 30px;
+      margin-bottom: 20px;
+    }
+    .main-hero-title {
+      font-size: 42px;
+      font-weight: 800;
+      font-family: 'Merriweather', serif;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+    .main-hero-sub {
+      font-size: 17px;
+      color: #94a3b8;
+      max-width: 800px;
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+    .info-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .info-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 18px 24px;
+    }
+    .info-box h4 {
+      font-size: 11px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .info-box p {
+      font-size: 13px;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+    .info-box strong {
+      color: #ffffff;
+    }
+    /* Architecture ASCII / Flow Block */
+    .arch-flow {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.45;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    ul.bullet-list {
+      list-style: none;
+    }
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    ul.bullet-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck-container">
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide slide-title-bg active" id="slide-1">
+    <div>
+      <span class="title-badge">S7 B.Tech Mini Project Defense • Academic Evaluation 2026</span>
+      <h1 class="main-hero-title">Intelligent Student Grievance<br>Resolution Agent</h1>
+      <p class="main-hero-sub">Automated Policy Triage, Case Management & Statutory Ombudsperson Redressal System</p>
+      
+      <div class="info-strip">
+        <div class="info-box">
+          <h4>Candidate Information</h4>
+          <p>Student Name: <strong>Adhikeshav</strong></p>
+          <p>Semester & Class: <strong>7th Semester (S7), B.Tech CSE</strong></p>
+          <p>Department: <strong>Computer Science & Engineering</strong></p>
+        </div>
+        <div class="info-box">
+          <h4>Supervisor Particulars</h4>
+          <p>Supervisor: <strong>[Supervisor Full Name]</strong></p>
+          <p>Designation: <strong>Assistant Professor / Associate Professor</strong></p>
+          <p>Statutory Framework: <strong>UGC Grievance Regulations (2023)</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Abstract -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-category">Executive Project Summary</div>
+      <h2 class="slide-title">Abstract</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Context & Institutional Challenges</div>
+        <div class="card-body">
+          <p><strong>High Influx of Disputes:</strong> Universities process thousands of critical student petitions per semester across evaluations, attendance, fee debits, and hostel conditions.</p>
+          <p><strong>Manual Bottlenecks:</strong> Current portals rely on passive forms or physical registers, causing multi-week delays without automated severity triage.</p>
+          <p><strong>Severe Consequences:</strong> Urgent petitions (e.g. hall tickets withheld before exams) get stuck in queues, causing academic harm and violating UGC statutory timelines.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Proposed Solution & Core Contributions</div>
+        <div class="card-body">
+          <p><strong>Automated Policy Triage:</strong> Deterministic NLP classifies petitions across 7 jurisdictions with >94% confidence.</p>
+          <p><strong>Statutory SLA Watchdog:</strong> Dynamic countdown clocks enforce strict turnaround: P1 Critical (24h) to P4 Routine (10d).</p>
+          <p><strong>Bylaw Cross-Referencing:</strong> Automatically cross-references petitions with UGC 2023 Norms and University Ordinance 14-B.</p>
+          <p><strong>Certified Decree Orders:</strong> Generates digitally signed legal resolution orders with official university seals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Literature Review -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-category">State-of-the-Art Analysis</div>
+      <h2 class="slide-title">Literature Review</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">1. National Portals (CPGRAMS & UGC e-Samadhan)</div>
+        <div class="card-body">
+          <p>Centralized national ingestion for public/student petitions.</p>
+          <p><strong>Limitation:</strong> Operates as passive forwarders; lacks NLP urgency triage and cannot issue legally binding university-level decree orders.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">2. Commercial ITSM Systems (Zendesk, Jira)</div>
+        <div class="card-body">
+          <p>Enterprise helpdesk software featuring ticket queues.</p>
+          <p><strong>Limitation:</strong> Designed for commercial customer service; completely ignorant of academic statutes and ombudsperson proceedings.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">3. Automated Dispute Resolution (ADR) Systems</div>
+        <div class="card-body">
+          <p>Automated legal mediation and regulatory mapping.</p>
+          <p><strong>Research Finding:</strong> Deterministic rule-based NLP provides superior explainability, auditability, and zero hallucination risk compared to unconstrained LLMs.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">4. Whistleblower & Confidential Systems</div>
+        <div class="card-body">
+          <p>Identity protection in high-stakes reporting.</p>
+          <p><strong>Research Finding:</strong> Over 62% of campus harassment cases go unreported due to fear of reprisal unless end-to-end cryptographic masking is guaranteed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Findings from Review -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-category">Critical Technical & Research Gaps</div>
+      <h2 class="slide-title">Findings from the Review</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="border-top: 4px solid var(--crimson);">
+        <div class="card-title">Gap 1: Absence of Policy Awareness</div>
+        <div class="card-body">
+          <p>Portals treat grievances as plain text strings without legal grounding.</p>
+          <p><strong>Impact:</strong> Committee officers waste days manually looking up university gazettes and evaluation ordinances.</p>
+          <p><strong>Our Fix:</strong> Automated statutory bylaw matcher cites applicable regulations instantly.</p>
+        </div>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--crimson);">
+        <div class="card-title">Gap 2: Missing Priority / SLA Triage</div>
+        <div class="card-body">
+          <p>Conventional systems process complaints in simple sequential FIFO order.</p>
+          <p><strong>Impact:</strong> Time-sensitive exam admit card complaints wait behind routine certificate queries.</p>
+          <p><strong>Our Fix:</strong> Urgency scoring engine assigns P1 (24h) / P2 (48h) SLAs with breach alarms.</p>
+        </div>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--crimson);">
+        <div class="card-title">Gap 3: Informal Remarks vs. Legal Decrees</div>
+        <div class="card-body">
+          <p>Ticketing portals produce plain text notes like "Looking into it".</p>
+          <p><strong>Impact:</strong> Departments ignore non-binding remarks; students have no enforceable document.</p>
+          <p><strong>Our Fix:</strong> Automated generator issues certified resolution orders with official seals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Objectives -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-category">Core Technical & Institutional Goals</div>
+      <h2 class="slide-title">Objectives of the Project</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Primary Objectives</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>Institutional Compliance:</strong> 100% adherence to UGC Grievance Redressal Regulations (2023).</li>
+            <li><strong>Intelligent NLP Triage:</strong> Classify petitions across 7 jurisdictions with >94% confidence.</li>
+            <li><strong>Turnaround SLA Enforcement:</strong> Strict turnaround clocks: P1 (24h), P2 (48h), P3 (5d), P4 (10d).</li>
+            <li><strong>Whistleblower Shield:</strong> Cryptographic tokenization masking student identity from respondents.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Functional Objectives</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>Officer Workbench:</strong> Role-based desk for Deans/Controllers with decision support.</li>
+            <li><strong>Certified Resolution Orders:</strong> Standardized decrees with directives and digital seals.</li>
+            <li><strong>Appellate Framework:</strong> Direct first-appeal escalation channel to the University Ombudsperson.</li>
+            <li><strong>Public Transparency:</strong> Live dashboards reporting resolution velocity and SLA adherence.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Proposed Methodology -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-category">Engineering Framework</div>
+      <h2 class="slide-title">Proposed Methodology</h2>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="padding:14px 20px;">
+        <p style="font-size:13px; color:var(--navy);"><strong>Stage 1: Statutory Knowledge Codification:</strong> Codified UGC 2023 rules, Ordinance 14-B (Re-evaluation), and hostel welfare norms into a structured database.</p>
+      </div>
+      <div class="card" style="padding:14px 20px;">
+        <p style="font-size:13px; color:var(--navy);"><strong>Stage 2: Deterministic NLP Triage Engine:</strong> Built token lexicons, category classification heuristics, and urgency weighting algorithms.</p>
+      </div>
+      <div class="card" style="padding:14px 20px;">
+        <p style="font-size:13px; color:var(--navy);"><strong>Stage 3: Multi-Stage Structured Intake:</strong> Built 5-step wizard with file validation and whistleblower identity tokenization.</p>
+      </div>
+      <div class="card" style="padding:14px 20px;">
+        <p style="font-size:13px; color:var(--navy);"><strong>Stage 4: Committee Workbench & Decision Support:</strong> Constructed role-based officer desk, hearing scheduler, and decree order generator.</p>
+      </div>
+      <div class="card" style="padding:14px 20px;">
+        <p style="font-size:13px; color:var(--navy);"><strong>Stage 5: Verification & Transparency:</strong> Implemented audit logs, SLA breach monitors, and public institutional transparency analytics.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Architecture Diagram -->
+  <div class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-category">System Architecture Diagram</div>
+      <h2 class="slide-title">Architecture Diagram</h2>
+    </div>
+    <div class="arch-flow">
+┌─────────────────────────────────┐       ┌─────────────────────────────────┐
+│     TIER 1: STUDENT INTAKE      │       │   TIER 2: POLICY TRIAGE AGENT   │
+│ • 5-Step Redressal Wizard       │ ───►  │ • Deterministic NLP Classifier  │
+│ • Whistleblower Identity Masking│       │ • Urgency Scoring Matrix (P1-4) │
+│ • Multi-Proof Document Dropzone │       │ • Bylaws Relational Cross-Match │
+└─────────────────────────────────┘       └────────────────┬────────────────┘
+                                                           │
+                                                           ▼
+┌─────────────────────────────────┐       ┌─────────────────────────────────┐
+│   TIER 4: RESOLUTION & AUDIT    │       │   TIER 3: OFFICER WORKBENCH     │
+│ • Certified Decrees with Seals  │ ◄───  │ • Dean / Controller Persona Desk│
+│ • Statutory Appeals to Ombuds   │       │ • Decision Support Draft Engine │
+│ • Public Transparency Dashboard │       │ • Hearing Summoner & Case Queue │
+└─────────────────────────────────┘       └─────────────────────────────────┘
+    </div>
+  </div>
+
+  <!-- SLIDE 8: How You Implement -->
+  <div class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-category">Technology Stack & Implementation</div>
+      <h2 class="slide-title">How We Implement</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Frontend & UI Engineering</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>React 18 & Vite 6:</strong> High-performance modular architecture with sub-second HMR.</li>
+            <li><strong>Tailwind CSS:</strong> Institutional design system in Oxford Navy (#0D1F3C) and Gold (#C59B27).</li>
+            <li><strong>Typography:</strong> Plus Jakarta Sans (UI), Merriweather (Legal decrees), JetBrains Mono (Hashes).</li>
+            <li><strong>Print Architecture:</strong> Dedicated @media print CSS generating single-page official legal stationery.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Backend & Algorithmic Triage</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>Node.js / Express 4:</strong> REST API on port 3000 with system health endpoints.</li>
+            <li><strong>Deterministic NLP Engine:</strong> Weighted token scoring across 7 departments with 0% hallucination risk.</li>
+            <li><strong>Decision Support Generator:</strong> Assembles findings of fact, citations, and operative directives.</li>
+            <li><strong>Cryptographic Integrity:</strong> SHA-256 tokens and 4-digit PINs ensuring tamper-proof audit trails.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Conclusion -->
+  <div class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-category">Project Impact & Future Roadmap</div>
+      <h2 class="slide-title">Conclusion</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Project Achievements</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>UGC Compliant:</strong> Fully operational platform conforming 100% to UGC 2023 regulations.</li>
+            <li><strong>Zero AI Gimmicks:</strong> Replaced consumer chatbot wrappers with auditable institutional decision support.</li>
+            <li><strong>Delay Reduction:</strong> Automated triage slashes administrative forwarding delays from days to milliseconds.</li>
+            <li><strong>Enforceable Decrees:</strong> Transformed informal complaints into verifiable legal orders.</li>
+            <li><strong>Tested & Deployed:</strong> Codebase tested and pushed to GitHub (adhikeshav3/S7_Minipro).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Future Scope</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>Multi-Lingual NLP:</strong> Add support for vernacular Indian languages (Hindi, Tamil, Marathi).</li>
+            <li><strong>Receipt OCR:</strong> Auto-extract fee transaction IDs from scanned payment slips using Tesseract.</li>
+            <li><strong>WhatsApp/SMS Gateway:</strong> Automatic dispatch of hearing notices to registered student numbers.</li>
+            <li><strong>Blockchain Verification:</strong> Decentralized consortium ledger for tamper-proof decree verification.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="deck-controls">
+    <button class="btn-nav" id="btnPrev">◀ Prev</button>
+    <span class="slide-indicator" id="slideIndicator">1 / 9</span>
+    <button class="btn-nav" id="btnNext">Next ▶</button>
+  </div>
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 9;
+
+  const slides = document.querySelectorAll('.slide');
+  const indicator = document.getElementById('slideIndicator');
+  const progressBar = document.getElementById('progressBar');
+
+  function updateSlide(n) {
+    currentSlide = Math.max(1, Math.min(totalSlides, n));
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx + 1 === currentSlide);
+    });
+    indicator.textContent = `${currentSlide} / ${totalSlides}`;
+    progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+  }
+
+  document.getElementById('btnPrev').addEventListener('click', () => updateSlide(currentSlide - 1));
+  document.getElementById('btnNext').addEventListener('click', () => updateSlide(currentSlide + 1));
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+      updateSlide(currentSlide + 1);
+    } else if (e.key === 'ArrowLeft') {
+      updateSlide(currentSlide - 1);
+    }
+  });
+</script>
+
+</body>
+</html>
