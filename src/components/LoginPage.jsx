@@ -25,8 +25,10 @@ export default function LoginPage({ onLogin }) {
     const user = {
       role: loginRole,
       id: registerNumber.trim().toUpperCase(),
-      name: loginRole === 'student' ? (registerNumber.includes('BT') ? 'Aarav Sharma' : 'Registered Student') : 'Dr. Savita Nambiar',
-      department: loginRole === 'student' ? 'Computer Science & Engineering' : 'Office of Controller of Examinations',
+      name: loginRole === 'student' ? (registerNumber.includes('1123237031') || registerNumber.includes('CS101') ? 'ADHIKESHAV A S' : 'Registered Student') : 'Dr. B. Ben Sujitha',
+      department: loginRole === 'student' ? 'Computer Science & Engineering' : 'Department of Computer Science & Engineering',
+      semester: '7th Semester, B.E.',
+      email: `${registerNumber.toLowerCase().replace(/[^a-z0-9]/g, '')}@niuniv.com`,
       loggedInAt: new Date().toISOString()
     };
 
@@ -38,16 +40,23 @@ export default function LoginPage({ onLogin }) {
     if (type === 'student') {
       const studentUser = {
         role: 'student',
-        id: '2023-BT-CSE-042',
-        name: 'Aarav Sharma',
+        id: '1123237031',
+        name: 'ADHIKESHAV A S',
         department: 'Computer Science & Engineering',
-        semester: '6th Semester, B.Tech',
-        email: 'aarav.sharma23@apexuniv.edu.in',
+        semester: '7th Semester, B.E.',
+        email: 'adhikeshav.cse@niuniv.com',
         loggedInAt: new Date().toISOString()
       };
       onLogin(studentUser);
     } else if (type === 'officer') {
-      const officer = UNIVERSITY_OFFICERS[1]; // Dr. Savita Nambiar (COE)
+      const officer = UNIVERSITY_OFFICERS[0] || {
+        id: 'OFF-CSE-HOD',
+        name: 'Dr. B. Ben Sujitha',
+        designation: 'Head of the Department (CSE)',
+        committee: 'Departmental Student Grievance Redressal Sub-Committee',
+        email: 'hod.cse@niuniv.com',
+        avatar: 'BS'
+      };
       const officerUser = {
         role: 'officer',
         id: officer.id,
@@ -79,14 +88,14 @@ export default function LoginPage({ onLogin }) {
         <div className="max-w-7xl mx-auto flex items-center justify-between text-white text-xs">
           <div className="flex items-center gap-3">
             <span className="px-2 py-0.5 rounded bg-crest-gold/20 text-crest-goldLight font-bold text-[10px] uppercase border border-crest-gold/30">
-              NAAC 'A++' ACCREDITED
+              NAAC ACCREDITED • DEEMED UNIVERSITY
             </span>
             <span className="text-institutional-300 hidden sm:inline">
-              Apex University Central Institutional Gateway • UGC Section 12(B)
+              Noorul Islam Centre for Higher Education (NICHE) • UGC Section 3
             </span>
           </div>
           <div className="text-institutional-300 text-[11px]">
-            Statutory Helpline: <strong className="text-white">1800-180-5522</strong>
+            Statutory Helpline: <strong className="text-white">04651-205800</strong>
           </div>
         </div>
       </header>
@@ -111,14 +120,17 @@ export default function LoginPage({ onLogin }) {
               </svg>
             </div>
 
-            <h1 className="text-xl sm:text-2xl font-bold font-serif text-white tracking-tight">
-              APEX UNIVERSITY
+            <h1 className="text-lg sm:text-xl font-bold font-serif text-white tracking-tight leading-snug">
+              NOORUL ISLAM CENTRE FOR HIGHER EDUCATION
             </h1>
-            <p className="text-xs text-crest-goldLight font-medium mt-0.5">
-              Student Grievance Redressal & Resolution Portal
+            <p className="text-[11px] text-crest-goldLight font-semibold mt-1">
+              (Deemed to be University under section 3 of UGC Act 1956)
             </p>
-            <p className="text-[11px] text-institutional-300 mt-1">
-              Please enter your Register Number & Password to continue
+            <p className="text-xs text-institutional-200 font-medium mt-0.5">
+              Kumaracoil, Thuckalay • Student Grievance Redressal Portal
+            </p>
+            <p className="text-[11px] text-institutional-300 mt-2">
+              Enter your Register Number & Password to continue
             </p>
           </div>
 
@@ -265,17 +277,17 @@ export default function LoginPage({ onLogin }) {
                   type="button"
                   onClick={() => handleQuickDemoLogin('student')}
                   className="py-2 px-2.5 rounded-lg bg-institutional-100 hover:bg-crest-gold hover:text-crest-deep text-institutional-800 text-[11px] font-bold transition-all border border-institutional-200"
-                  title="Log in immediately as student Aarav Sharma (2023-BT-CSE-042)"
+                  title="Log in immediately as student ADHIKESHAV A S (1123237031)"
                 >
-                  🎓 Student Demo (Aarav)
+                  🎓 Student Demo (Adhikeshav)
                 </button>
                 <button
                   type="button"
                   onClick={() => handleQuickDemoLogin('officer')}
                   className="py-2 px-2.5 rounded-lg bg-institutional-100 hover:bg-crest-navy hover:text-white text-institutional-800 text-[11px] font-bold transition-all border border-institutional-200"
-                  title="Log in immediately as Officer Dr. Savita Nambiar (Controller of Examinations)"
+                  title="Log in immediately as Dr. B. Ben Sujitha (HOD - CSE)"
                 >
-                  🏛️ Staff Demo (COE)
+                  🏛️ Staff Demo (HOD - CSE)
                 </button>
               </div>
             </div>
@@ -293,7 +305,7 @@ export default function LoginPage({ onLogin }) {
 
       {/* Page Footer */}
       <footer className="relative z-10 py-3 px-6 text-center text-[11px] text-institutional-400 border-t border-white/10">
-        © 2026 Apex University. Directorate of Student Grievance Redressal. All rights reserved.
+        © 2026 Noorul Islam Centre for Higher Education (NICHE). Directorate of Student Grievance Redressal. All rights reserved.
       </footer>
 
     </div>

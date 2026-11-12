@@ -11,16 +11,16 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center px-2 py-0.5 rounded bg-crest-gold/20 text-crest-goldLight font-semibold text-[10px] tracking-wider uppercase border border-crest-gold/30">
-              NAAC 'A++' ACCREDITED
+              NAAC ACCREDITED • DEEMED TO BE UNIVERSITY
             </span>
             <span className="text-institutional-300">
-              UGC Section 12(B) Validated • Student Grievance Redressal Portal
+              UGC Act 1956 Section 3 • Noorul Islam Centre for Higher Education (NICHE)
             </span>
           </div>
           <div className="flex items-center gap-4 text-institutional-300">
             <span className="flex items-center gap-1.5 hover:text-white transition-colors">
               <PhoneCall className="w-3 h-3 text-crest-goldLight" />
-              Helpline: <strong className="text-white">1800-180-5522</strong>
+              Helpline: <strong className="text-white">04651-205800</strong>
             </span>
           </div>
         </div>
@@ -50,15 +50,15 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base sm:text-lg font-bold font-serif text-crest-navy tracking-tight group-hover:text-crest-blue transition-colors">
-                APEX UNIVERSITY
+              <h1 className="text-sm sm:text-base md:text-lg font-bold font-serif text-crest-navy tracking-tight group-hover:text-crest-blue transition-colors leading-tight">
+                NOORUL ISLAM CENTRE FOR HIGHER EDUCATION
               </h1>
               <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-institutional-100 text-institutional-700 border border-institutional-200">
-                Grievance Cell
+                NICHE
               </span>
             </div>
             <p className="text-[11px] text-institutional-500 font-medium">
-              Student Grievance & Resolution Portal
+              Kumaracoil, Thuckalay • Central Student Grievance Redressal Portal
             </p>
           </div>
         </div>

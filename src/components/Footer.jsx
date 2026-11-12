@@ -25,24 +25,24 @@ export default function Footer({ onResetData }) {
               </div>
               <div>
                 <h3 className="font-serif font-bold text-base text-white tracking-tight">
-                  APEX UNIVERSITY
+                  NOORUL ISLAM CENTRE FOR HIGHER EDUCATION
                 </h3>
                 <p className="text-[10px] text-crest-goldLight font-semibold tracking-wider uppercase">
-                  Statutory Redressal Directorate
+                  Statutory Student Grievance Redressal Directorate
                 </p>
               </div>
             </div>
 
             <p className="text-xs text-institutional-300 leading-relaxed font-normal">
-              Autonomous Central Institution of Higher Learning established under Act of Parliament. Recognized under Section 2(f) and 12(B) of UGC Act, 1956. NAAC Accredited 'A++'.
+              Deemed to be University under section 3 of UGC Act 1956. Kumaracoil, Thuckalay, Kanyakumari District, Tamil Nadu, India - 629180. Accredited by NAAC.
             </p>
 
             <div className="flex items-center gap-2 pt-1">
               <span className="text-[10px] font-bold text-crest-goldLight bg-crest-gold/15 px-2.5 py-1 rounded border border-crest-gold/30">
-                NIRF Top 10 University
+                NAAC Accredited
               </span>
               <span className="text-[10px] font-bold text-emerald-300 bg-emerald-900/40 px-2.5 py-1 rounded border border-emerald-500/30">
-                ISO 9001:2015 Certified
+                UGC Section 3 Validated
               </span>
             </div>
           </div>
@@ -56,16 +56,16 @@ export default function Footer({ onResetData }) {
               <div className="flex items-start gap-2">
                 <PhoneCall className="w-3.5 h-3.5 text-crest-gold shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-white">Anti-Ragging 24x7 Helpline:</p>
-                  <p className="text-crest-goldLight font-mono">1800-180-5522 (Toll Free)</p>
+                  <p className="font-semibold text-white">NICHE Campus Helpline:</p>
+                  <p className="text-crest-goldLight font-mono">04651-205800 / 205801</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-2">
                 <ShieldCheck className="w-3.5 h-3.5 text-red-400 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-white">Internal Complaints Committee:</p>
-                  <p className="text-institutional-300">icc.ombudsperson@apexuniv.edu.in</p>
+                  <p className="font-semibold text-white">Internal Complaints Committee (ICC):</p>
+                  <p className="text-institutional-300">icc@niuniv.com</p>
                 </div>
               </div>
 
@@ -73,7 +73,7 @@ export default function Footer({ onResetData }) {
                 <Mail className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-white">Central Ombudsperson Desk:</p>
-                  <p className="text-institutional-300">ombudsperson@apexuniv.edu.in</p>
+                  <p className="text-institutional-300">ombudsperson@niuniv.com</p>
                 </div>
               </div>
             </div>
@@ -113,8 +113,9 @@ export default function Footer({ onResetData }) {
                 <MapPin className="w-3.5 h-3.5 text-crest-gold shrink-0 mt-0.5" />
                 <p className="leading-relaxed">
                   Office of the University Ombudsperson<br />
-                  Senate Administrative Block, 2nd Floor<br />
-                  Apex University Campus, Pin 110021
+                  Administrative Complex, Ground Floor<br />
+                  Noorul Islam Centre for Higher Education<br />
+                  Kumaracoil, Thuckalay, Pin 629180
                 </p>
               </div>
 
@@ -138,7 +139,7 @@ export default function Footer({ onResetData }) {
       {/* Bottom Legal Copyright Bar */}
       <div className="border-t border-white/10 py-4 px-4 sm:px-8 text-center text-xs text-institutional-400">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p>© 2026 Apex University. All Statutory Rights Reserved. Veritas, Justitia, Aequitas.</p>
+          <p>© 2026 Noorul Islam Centre for Higher Education (NICHE). All Statutory Rights Reserved.</p>
           <p className="text-[11px] text-institutional-400">
             Intelligent Student Grievance Redressal System • Directorate of Student Affairs
           </p>

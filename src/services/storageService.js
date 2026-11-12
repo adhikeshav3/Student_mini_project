@@ -1,7 +1,7 @@
 import { INITIAL_GRIEVANCES } from '../data/mockGrievances';
 import { analyzeGrievanceText } from './triageEngine';
 
-const STORAGE_KEY = 'apex_university_grievances_v1';
+const STORAGE_KEY = 'niche_university_grievances_v1';
 
 export function getStoredGrievances() {
   try {
@@ -33,7 +33,7 @@ export function createNewGrievance(formData) {
 
   const now = new Date();
   const idNumber = Math.floor(1000 + Math.random() * 9000);
-  const docketId = `APX-2026-GRV-${idNumber}`;
+  const docketId = `NICHE-2026-GRV-${idNumber}`;
   const pin = Math.floor(1000 + Math.random() * 9000).toString();
 
   // Compute SLA deadline
@@ -120,7 +120,7 @@ export function issueResolutionOrder(docketId, orderDetails) {
   const now = new Date();
   const grievance = { ...list[index] };
 
-  const orderNumber = `APX/${grievance.category.substring(0, 3).toUpperCase()}/ORD/2026/${Math.floor(100 + Math.random() * 900)}`;
+  const orderNumber = `NICHE/${grievance.category.substring(0, 3).toUpperCase()}/ORD/2026/${Math.floor(100 + Math.random() * 900)}`;
 
   grievance.status = 'Action Directed';
   grievance.resolutionOrder = {
@@ -132,14 +132,14 @@ export function issueResolutionOrder(docketId, orderDetails) {
     findingsSummary: orderDetails.findingsSummary,
     directives: orderDetails.directives || [],
     complianceDeadline: orderDetails.complianceDeadline || 'Within 48 Hours',
-    officialSeal: 'APEX_UNIVERSITY_OFFICIAL_STATUTORY_SEAL'
+    officialSeal: 'NOORUL_ISLAM_CENTRE_FOR_HIGHER_EDUCATION_OFFICIAL_STATUTORY_SEAL'
   };
 
   grievance.timeline.push({
     step: 'Official Formal Resolution Order Issued',
     timestamp: formatTimestamp(now),
     actor: orderDetails.authorityName,
-    note: `Order No: ${orderNumber} enacted. Official directives communicated to relevant academic/administrative desks.`
+    note: `Order No: ${orderNumber} enacted. Official directives communicated to relevant academic/administrative desks at NICHE.`
   });
 
   list[index] = grievance;

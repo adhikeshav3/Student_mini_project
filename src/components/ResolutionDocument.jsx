@@ -58,14 +58,14 @@ export default function ResolutionDocument({ grievance, onClose }) {
               </svg>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-crest-navy uppercase">
-              Apex University & Institute of Higher Studies
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-crest-navy uppercase">
+              Noorul Islam Centre for Higher Education
             </h1>
             <p className="text-xs font-sans font-semibold tracking-wider text-institutional-600 uppercase mt-1">
-              Statutory Directorate of Student Welfare & University Ombudsperson
+              (Deemed to be University under section 3 of UGC Act 1956) • Kumaracoil, Thuckalay
             </p>
             <p className="text-[11px] font-sans text-institutional-500 mt-0.5">
-              Senate Administrative Complex, University Campus • Recognized under Section 12(B) of UGC Act, 1956
+              Accredited by NAAC • Statutory Student Grievance Redressal Committee
             </p>
 
             <div className="inline-block mt-4 px-4 py-1 border-t border-b border-crest-gold text-crest-navy font-bold text-xs uppercase tracking-widest font-sans">
@@ -154,16 +154,16 @@ export default function ResolutionDocument({ grievance, onClose }) {
             
             {/* Seal Graphic */}
             <div className="flex items-center gap-3">
-              <div className="w-20 h-20 rounded-full border-2 border-dashed border-crest-gold p-1 flex items-center justify-center text-crest-goldDark text-center font-sans text-[9px] font-bold uppercase leading-tight">
+              <div className="w-20 h-20 rounded-full border-2 border-dashed border-crest-gold p-1 flex items-center justify-center text-crest-goldDark text-center font-sans text-[8.5px] font-bold uppercase leading-tight">
                 <div>
                   <Award className="w-5 h-5 mx-auto text-crest-gold" />
-                  Apex University<br/>Official Seal<br/>2026
+                  Noorul Islam<br/>Official Seal<br/>NICHE 2026
                 </div>
               </div>
               <div className="text-[10px] font-sans text-institutional-500 space-y-0.5">
                 <p>DIGITALLY SIGNED & SEALED</p>
                 <p className="font-mono">HASH: 7f9a2b8e4d1c920</p>
-                <p>VERIFIED ON SENATE LEDGER</p>
+                <p>VERIFIED ON NICHE SENATE LEDGER</p>
               </div>
             </div>
 
@@ -176,7 +176,7 @@ export default function ResolutionDocument({ grievance, onClose }) {
               </div>
               <p className="font-bold text-xs text-institutional-900 mt-1">{order.authorityName}</p>
               <p className="text-[11px] text-institutional-600">{order.designation}</p>
-              <p className="text-[10px] text-institutional-400">Authorized Signatory • Apex University</p>
+              <p className="text-[10px] text-institutional-400">Authorized Signatory • NICHE</p>
             </div>
 
           </div>
