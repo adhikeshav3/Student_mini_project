@@ -1,24 +1,42 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, ArrowRight, ArrowLeft, ShieldCheck, Scale, Clock, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight, ArrowLeft, ShieldCheck, Scale, Clock, Lock, User, GraduationCap, Users, Shield, X, CheckCircle2 } from 'lucide-react';
 import { UNIVERSITY_OFFICERS } from '../data/mockGrievances';
 import highResCampusPhoto from '../assets/niche_highres.png';
 
 export default function LoginPage({ onLogin }) {
-  // 'gateway' (Starting Page with Black & White Campus) | 'login' (Minimalist Login Card)
+  // 'gateway' (Starting Page with 4K HD Campus) | 'portal_select' (Separate Minimal Sign-In Portal Select Page)
   const [viewMode, setViewMode] = useState('gateway');
   
+  // Selected Portal for credential login modal ('student' | 'officer' | 'admin' | null)
+  const [selectedPortal, setSelectedPortal] = useState(null);
+
   // Login Form States
-  const [loginRole, setLoginRole] = useState('student'); // 'student' | 'officer'
   const [registerNumber, setRegisterNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('student@123');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
 
+  // Handle Opening Login Credentials Modal for a Specific Portal
+  const handleOpenPortalAuth = (portalKey) => {
+    setSelectedPortal(portalKey);
+    setError('');
+    if (portalKey === 'student') {
+      setRegisterNumber('1123237031');
+      setPassword('student@123');
+    } else if (portalKey === 'officer') {
+      setRegisterNumber('OFF-CSE-HOD');
+      setPassword('officer@123');
+    } else if (portalKey === 'admin') {
+      setRegisterNumber('OMBUDS-01');
+      setPassword('admin@123');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!registerNumber.trim()) {
-      setError(loginRole === 'student' ? 'Please enter your Student Register / Roll Number.' : 'Please enter your Staff / Faculty ID.');
+      setError(selectedPortal === 'student' ? 'Please enter your Student Register / Roll Number.' : 'Please enter your Staff / Faculty ID.');
       return;
     }
     if (!password.trim() || password.length < 4) {
@@ -26,23 +44,53 @@ export default function LoginPage({ onLogin }) {
       return;
     }
 
-    // Successful login object
-    const user = {
-      role: loginRole,
-      id: registerNumber.trim().toUpperCase(),
-      name: loginRole === 'student' 
-        ? (registerNumber.includes('1123237031') || registerNumber.includes('CS101') ? 'ADHIKESHAV A S' : 'Registered Student') 
-        : 'Dr. B. Ben Sujitha',
-      department: loginRole === 'student' ? 'Computer Science & Engineering' : 'Department of Computer Science & Engineering',
-      semester: '7th Semester, B.E.',
-      email: `${registerNumber.toLowerCase().replace(/[^a-z0-9]/g, '')}@niuniv.com`,
-      loggedInAt: new Date().toISOString()
-    };
-
-    onLogin(user);
+    if (selectedPortal === 'student') {
+      const user = {
+        role: 'student',
+        id: registerNumber.trim().toUpperCase(),
+        name: registerNumber.includes('1123237031') || registerNumber.includes('CS101') ? 'ADHIKESHAV A S' : 'Registered Student',
+        department: 'Computer Science & Engineering',
+        semester: '7th Semester, B.E.',
+        email: `${registerNumber.toLowerCase().replace(/[^a-z0-9]/g, '')}@niuniv.com`,
+        loggedInAt: new Date().toISOString()
+      };
+      onLogin(user);
+    } else if (selectedPortal === 'officer') {
+      const officer = UNIVERSITY_OFFICERS[0] || {
+        id: 'OFF-CSE-HOD',
+        name: 'Dr. B. Ben Sujitha',
+        designation: 'Head of the Department (CSE)',
+        committee: 'Departmental Student Grievance Redressal Sub-Committee',
+        email: 'hod.cse@niuniv.com',
+        avatar: 'BS'
+      };
+      const user = {
+        role: 'officer',
+        id: registerNumber.trim().toUpperCase() || officer.id,
+        name: officer.name,
+        designation: officer.designation,
+        committee: officer.committee,
+        email: officer.email,
+        avatar: officer.avatar,
+        loggedInAt: new Date().toISOString()
+      };
+      onLogin(user);
+    } else {
+      const adminUser = {
+        role: 'officer',
+        id: registerNumber.trim().toUpperCase() || 'OMBUDS-01',
+        name: 'Prof. M. S. Pillai (Ombudsperson)',
+        designation: 'Statutory Student Grievance Ombudsperson',
+        committee: 'University Appellate Grievance Bench & Directorate',
+        email: 'ombudsperson@niuniv.com',
+        avatar: 'MP',
+        loggedInAt: new Date().toISOString()
+      };
+      onLogin(adminUser);
+    }
   };
 
-  // Instant 1-Click Fast Demo Login for Evaluators & Students
+  // Instant 1-Click Quick Demo Login
   const handleQuickDemoLogin = (type) => {
     if (type === 'student') {
       const studentUser = {
@@ -75,6 +123,18 @@ export default function LoginPage({ onLogin }) {
         loggedInAt: new Date().toISOString()
       };
       onLogin(officerUser);
+    } else if (type === 'admin') {
+      const adminUser = {
+        role: 'officer',
+        id: 'OMBUDS-01',
+        name: 'Prof. M. S. Pillai (Ombudsperson)',
+        designation: 'Statutory Student Grievance Ombudsperson',
+        committee: 'University Appellate Grievance Bench',
+        email: 'ombudsperson@niuniv.com',
+        avatar: 'MP',
+        loggedInAt: new Date().toISOString()
+      };
+      onLogin(adminUser);
     }
   };
 
@@ -82,27 +142,25 @@ export default function LoginPage({ onLogin }) {
     <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden selection:bg-white selection:text-black">
       
       {/* ============================================================== */}
-      {/* 4K ULTRA-HD CAMPUS BACKGROUND WITH 5% ENHANCED BLACK DEPTH     */}
-      {/* ============================================================== */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-black overflow-hidden">
-        <img 
-          src={highResCampusPhoto} 
-          alt="Noorul Islam Centre for Higher Education Campus" 
-          className="w-full h-full object-cover object-center opacity-65 filter brightness-[0.75] contrast-125 scale-100 transition-all duration-700"
-        />
-        {/* Preserved Dark Fadeness & Atmospheric Vignette (5% Deeper Black Tone) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/65" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.35)_0%,rgba(0,0,0,0.70)_100%)]" />
-      </div>
-
-      {/* ============================================================== */}
-      {/* VIEW 1: STARTING PAGE (EXACT REPLICA OF LAPTOP SCREEN REFERENCE) */}
+      {/* VIEW 1: STARTING PAGE (4K HD BACKGROUND & CINEMATIC THEME)     */}
       {/* ============================================================== */}
       {viewMode === 'gateway' ? (
         <div className="relative z-10 min-h-screen flex flex-col justify-between p-6 sm:p-10 animate-fadeIn">
           
+          {/* Background Image with 5% Deeper Black Dominance */}
+          <div className="fixed inset-0 pointer-events-none z-0 bg-black overflow-hidden">
+            <img 
+              src={highResCampusPhoto} 
+              alt="Noorul Islam Centre for Higher Education Campus" 
+              className="w-full h-full object-cover object-center opacity-65 filter brightness-[0.75] contrast-125 scale-100 transition-all duration-700"
+            />
+            {/* Preserved Dark Fadeness & Atmospheric Vignette */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/65" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.35)_0%,rgba(0,0,0,0.70)_100%)]" />
+          </div>
+
           {/* Top Bar */}
-          <header className="flex items-center justify-between text-xs tracking-wider">
+          <header className="relative z-10 flex items-center justify-between text-xs tracking-wider">
             <div className="flex items-center">
               <span className="font-poppins uppercase tracking-[0.2em] text-[11px] text-neutral-300 font-semibold">
                 NICHE | Deemed to be University
@@ -117,8 +175,8 @@ export default function LoginPage({ onLogin }) {
             </div>
           </header>
 
-          {/* Centerpiece Hero (Matching Reference Image) */}
-          <main className="my-auto py-12 flex flex-col items-center justify-center text-center max-w-4xl mx-auto px-4">
+          {/* Centerpiece Hero */}
+          <main className="relative z-10 my-auto py-12 flex flex-col items-center justify-center text-center max-w-4xl mx-auto px-4">
             
             {/* University Name in Poppins Font */}
             <h1 className="font-poppins font-bold uppercase tracking-[0.22em] text-white text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.2] drop-shadow-2xl">
@@ -131,11 +189,11 @@ export default function LoginPage({ onLogin }) {
               Student Grievance Redressal Portal
             </p>
 
-            {/* Outlined "SIGN IN" Button (Exact Match to Reference Photo) */}
+            {/* Outlined "SIGN IN" Button - Transitions to Separate Sign-In Page */}
             <div className="mt-8 sm:mt-10 flex flex-col items-center gap-4">
               <button
                 type="button"
-                onClick={() => setViewMode('login')}
+                onClick={() => setViewMode('portal_select')}
                 className="px-10 sm:px-12 py-3 sm:py-3.5 border border-white/90 hover:border-white bg-black/40 hover:bg-white text-white hover:text-black uppercase tracking-[0.3em] text-xs font-semibold transition-all duration-300 shadow-2xl backdrop-blur-sm active:scale-95 cursor-pointer"
               >
                 Sign In
@@ -144,8 +202,8 @@ export default function LoginPage({ onLogin }) {
 
           </main>
 
-          {/* Footer Bar without dividing line or switch button */}
-          <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 tracking-wider gap-2">
+          {/* Footer Bar */}
+          <footer className="relative z-10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 tracking-wider gap-2">
             <div>
               Kumaracoil, Thuckalay, Kanyakumari District, Tamil Nadu - 629 180
             </div>
@@ -158,222 +216,262 @@ export default function LoginPage({ onLogin }) {
       ) : (
 
         /* ============================================================== */
-        /* VIEW 2: MINIMALIST LOGIN CARD (INSPIRED BY REFERENCE IMAGE 1)  */
+        /* VIEW 2: SEPARATE MINIMAL SIGN-IN PAGE (MATCHING REFERENCE IMAGE)*/
         /* ============================================================== */
-        <div className="relative z-10 min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-10 animate-fadeIn">
+        <div className="relative z-10 min-h-screen flex flex-col justify-between p-6 sm:p-10 bg-[#0A101D] animate-fadeIn overflow-hidden">
           
-          {/* Top Bar with Back Button */}
-          <header className="max-w-7xl w-full mx-auto flex items-center justify-between text-xs py-2">
+          {/* Subtle Ambient Vignette & Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A101D] via-[#0E1626] to-[#080D18] pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(26,45,77,0.18)_0%,transparent_75%)] pointer-events-none" />
+
+          {/* ============================================================ */}
+          {/* GIANT "N I C H E" WATERMARK ACROSS THE SCREEN BACKGROUND     */}
+          {/* ============================================================ */}
+          <div className="absolute inset-0 flex items-center justify-around pointer-events-none select-none overflow-hidden z-0 px-4 sm:px-12 opacity-60">
+            <span className="font-poppins font-black text-[15vw] text-white/[0.045] leading-none">N</span>
+            <span className="font-poppins font-black text-[15vw] text-white/[0.045] leading-none">I</span>
+            <span className="font-poppins font-black text-[15vw] text-white/[0.045] leading-none">C</span>
+            <span className="font-poppins font-black text-[15vw] text-white/[0.045] leading-none">H</span>
+            <span className="font-poppins font-black text-[15vw] text-white/[0.045] leading-none">E</span>
+          </div>
+
+          {/* Top Bar matching reference */}
+          <header className="relative z-10 flex items-center justify-between text-xs py-1">
             <button
               type="button"
               onClick={() => {
                 setViewMode('gateway');
+                setSelectedPortal(null);
                 setError('');
               }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all text-xs font-medium cursor-pointer"
+              className="inline-flex items-center gap-2 text-neutral-400 hover:text-white uppercase tracking-[0.2em] text-xs font-semibold transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Portal Home</span>
+              <span>BACK</span>
             </button>
-            <div className="text-neutral-400 text-[11px] hidden sm:block tracking-wider uppercase">
-              Noorul Islam Centre for Higher Education
+
+            <div className="font-poppins uppercase tracking-[0.22em] text-xs sm:text-[13px] text-neutral-200 font-semibold text-center hidden sm:block">
+              NOORUL ISLAM CENTRE FOR HIGHER EDUCATION
+            </div>
+
+            {/* University Emblem / Logo Badge */}
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-crest-gold/20 border border-crest-gold/40 flex items-center justify-center text-crest-goldLight text-xs font-bold font-serif shadow-sm">
+                NI
+              </div>
+              <span className="font-poppins text-xs font-bold text-white tracking-widest hidden md:inline">
+                NICHE
+              </span>
             </div>
           </header>
 
-          {/* Main Login Card Centerpiece */}
-          <main className="my-auto flex items-center justify-center py-6">
-            <div className="w-full max-w-[410px] bg-white text-neutral-900 rounded-[2.5rem] border border-neutral-200/90 shadow-[0_25px_70px_rgba(0,0,0,0.5)] p-7 sm:p-9 relative transition-all">
+          {/* Centerpiece: "INSTITUTIONAL ACCESS - SELECT YOUR PORTAL" */}
+          <main className="relative z-10 my-auto py-8 flex flex-col items-center justify-center">
+            
+            <div className="w-full max-w-[480px] rounded-3xl border border-white/15 bg-white/[0.035] backdrop-blur-2xl p-7 sm:p-9 shadow-[0_20px_60px_rgba(0,0,0,0.6)] relative">
               
-              {/* Sleek Dynamic Island / Phone Mockup Element (From Ref Image 1) */}
-              <div className="w-16 h-3.5 bg-neutral-900 rounded-full mx-auto mb-6 opacity-90"></div>
-
-              {/* Minimalist Circular University Emblem / Monogram */}
-              <div className="w-12 h-12 rounded-full bg-neutral-900 text-white flex items-center justify-center mx-auto mb-3 shadow-md">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-                  <circle cx="12" cy="12" r="9" strokeOpacity="0.4" />
-                  <path d="M12 3v18" strokeLinecap="round" />
-                  <path d="M3 12h18" strokeLinecap="round" />
-                  <path d="M7 7l10 10" strokeLinecap="round" />
-                </svg>
+              {/* Header inside the container */}
+              <div className="text-center mb-6">
+                <span className="font-sans uppercase tracking-[0.25em] text-[10px] sm:text-[11px] font-semibold text-neutral-400 block mb-1.5">
+                  INSTITUTIONAL ACCESS
+                </span>
+                <h2 className="font-poppins font-bold text-lg sm:text-xl text-white tracking-wider">
+                  SELECT YOUR PORTAL
+                </h2>
               </div>
 
-              {/* University Title in Poppins Font */}
-              <h2 className="font-poppins font-bold text-[15px] sm:text-base text-neutral-900 tracking-tight text-center leading-snug">
-                Noorul Islam Centre For Higher Education
-              </h2>
-
-              {/* Subtitle in Professional Font */}
-              <p className="font-sans text-[10.5px] uppercase tracking-[0.22em] font-semibold text-neutral-400 text-center mt-1">
-                Student Grievance Redressal Portal
-              </p>
-
-              {/* Welcome Back & Subtitle from Reference Image 1 */}
-              <div className="text-center mt-5 mb-5">
-                <h1 className="font-poppins text-2xl font-bold text-neutral-900 tracking-tight">
-                  Welcome Back !
-                </h1>
-                <p className="text-xs text-neutral-400 font-normal mt-1">
-                  Please enter your details.
-                </p>
-              </div>
-
-              {/* Minimal Role Switcher Toggle */}
-              <div className="grid grid-cols-2 bg-neutral-100 p-1 rounded-xl text-xs font-medium text-neutral-600 mb-5">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLoginRole('student');
-                    setError('');
-                  }}
-                  className={`py-2 rounded-lg transition-all ${
-                    loginRole === 'student'
-                      ? 'bg-white text-neutral-900 font-semibold shadow-sm'
-                      : 'hover:text-neutral-900'
-                  }`}
-                >
-                  Student
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLoginRole('officer');
-                    setError('');
-                  }}
-                  className={`py-2 rounded-lg transition-all ${
-                    loginRole === 'officer'
-                      ? 'bg-neutral-900 text-white font-semibold shadow-sm'
-                      : 'hover:text-neutral-900'
-                  }`}
-                >
-                  Staff / Officer
-                </button>
-              </div>
-
-              {/* Error Message */}
-              {error && (
-                <div className="mb-4 p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-600 shrink-0"></span>
-                  <span>{error}</span>
-                </div>
-              )}
-
-              {/* Login Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              {/* 3 Portal Selection Cards */}
+              <div className="space-y-3.5">
                 
-                {/* Register Number / Staff ID Input */}
-                <div>
-                  <label className="block text-xs font-medium text-neutral-700 mb-1.5 font-sans">
-                    {loginRole === 'student' ? 'Register / Roll Number' : 'Staff / Faculty ID'}
-                  </label>
-                  <input
-                    type="text"
-                    value={registerNumber}
-                    onChange={(e) => {
-                      setRegisterNumber(e.target.value);
-                      setError('');
-                    }}
-                    placeholder={loginRole === 'student' ? 'e.g. 1123237031' : 'e.g. OFF-CSE-HOD'}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 bg-neutral-50/50 text-sm text-neutral-900 placeholder:text-neutral-400 focus:bg-white focus:border-neutral-900 focus:outline-none transition-all uppercase font-mono"
-                    autoFocus
-                  />
-                </div>
-
-                {/* Password Input */}
-                <div>
-                  <label className="block text-xs font-medium text-neutral-700 mb-1.5 font-sans">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        setError('');
-                      }}
-                      placeholder="••••••••"
-                      className="w-full px-3.5 pr-10 py-2.5 rounded-xl border border-neutral-200 bg-neutral-50/50 text-sm text-neutral-900 placeholder:text-neutral-400 focus:bg-white focus:border-neutral-900 focus:outline-none transition-all"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-neutral-700"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Remember Me & Help */}
-                <div className="flex items-center justify-between text-xs pt-0.5">
-                  <label className="flex items-center gap-2 cursor-pointer text-neutral-600 select-none">
-                    <input
-                      type="checkbox"
-                      checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                      className="w-3.5 h-3.5 rounded text-neutral-900 focus:ring-0 border-neutral-300 accent-neutral-900"
-                    />
-                    <span className="text-[11.5px]">Remember me</span>
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => alert("For demonstration purposes, you can use any password (min 4 chars) or click the 1-Click Demo buttons below.")}
-                    className="text-[11.5px] text-neutral-500 hover:text-neutral-900 font-medium transition-colors"
-                  >
-                    Forgot Password?
-                  </button>
-                </div>
-
-                {/* Minimalist Dark Pill Button matching Reference Image 1 */}
-                <button
-                  type="submit"
-                  className="w-full py-3 px-4 rounded-xl bg-[#18181b] hover:bg-black text-white text-sm font-medium transition-all shadow-sm hover:shadow active:scale-[0.99] flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                {/* 1. STUDENT PORTAL CARD */}
+                <div
+                  onClick={() => handleOpenPortalAuth('student')}
+                  className="group flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.09] hover:border-white/25 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  <span>Login</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-
-                {/* Legal Disclaimer */}
-                <p className="text-[10px] text-neutral-400 text-center leading-relaxed pt-1">
-                  By logging in, you agree to our{' '}
-                  <span className="text-neutral-700 underline cursor-pointer">Terms of Service</span> and{' '}
-                  <span className="text-neutral-700 underline cursor-pointer">Privacy Policy</span>.
-                </p>
-
-                {/* 1-Click Fast Demo Shortcuts */}
-                <div className="pt-3 border-t border-neutral-100">
-                  <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block text-center mb-2">
-                    ⚡ Quick 1-Click Demo Access
-                  </span>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleQuickDemoLogin('student')}
-                      className="py-1.5 px-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[11px] font-medium transition-colors"
-                      title="Sign in as student ADHIKESHAV A S (1123237031)"
-                    >
-                      🎓 Student Demo
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleQuickDemoLogin('officer')}
-                      className="py-1.5 px-2 rounded-lg bg-neutral-100 hover:bg-neutral-900 hover:text-white text-neutral-800 text-[11px] font-medium transition-colors"
-                      title="Sign in as Dr. B. Ben Sujitha (HOD - CSE)"
-                    >
-                      🏛️ Staff Demo
-                    </button>
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors shrink-0">
+                      <GraduationCap className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-poppins font-bold text-sm text-white tracking-wide">
+                        STUDENT
+                      </div>
+                      <div className="text-[11px] text-neutral-400 mt-0.5 leading-snug">
+                        B.Tech / M.Tech Grievance Redressal Cohort 2026
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-white/10 group-hover:bg-white text-white group-hover:text-black flex items-center justify-center transition-all shrink-0 ml-2">
+                    <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>
 
-              </form>
+                {/* 2. MENTOR / OFFICER PORTAL CARD */}
+                <div
+                  onClick={() => handleOpenPortalAuth('officer')}
+                  className="group flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.09] hover:border-white/25 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors shrink-0">
+                      <Users className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-poppins font-bold text-sm text-white tracking-wide">
+                        MENTOR / OFFICER
+                      </div>
+                      <div className="text-[11px] text-neutral-400 mt-0.5 leading-snug">
+                        Department Grievance Redressal Sub-Committee (DGRC)
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-white/10 group-hover:bg-white text-white group-hover:text-black flex items-center justify-center transition-all shrink-0 ml-2">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+
+                {/* 3. ADMIN / OMBUDSPERSON PORTAL CARD */}
+                <div
+                  onClick={() => handleOpenPortalAuth('admin')}
+                  className="group flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.09] hover:border-white/25 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors shrink-0">
+                      <Shield className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-poppins font-bold text-sm text-white tracking-wide">
+                        ADMIN
+                      </div>
+                      <div className="text-[11px] text-neutral-400 mt-0.5 leading-snug">
+                        Statutory Appellate Bench & Directorate Console
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-white/10 group-hover:bg-white text-white group-hover:text-black flex items-center justify-center transition-all shrink-0 ml-2">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+
+              </div>
 
             </div>
+
           </main>
 
-          {/* Bottom Footer */}
-          <footer className="w-full py-2 text-center text-[11px] text-neutral-400">
-            © 2026 Noorul Islam Centre for Higher Education (NICHE). Directorate of Student Grievance Redressal.
+          {/* Bottom Footer matching reference photo */}
+          <footer className="relative z-10 text-center py-2">
+            <span className="font-sans uppercase tracking-[0.25em] text-[11px] text-neutral-400 font-medium">
+              STUDENT GRIEVANCE REDRESSAL PORTAL OF NICHE
+            </span>
           </footer>
+
+          {/* ============================================================ */}
+          {/* ROLE LOGIN MODAL (OPENS WHEN A PORTAL CARD IS CLICKED)       */}
+          {/* ============================================================ */}
+          {selectedPortal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+              <div className="w-full max-w-[420px] bg-[#121A2A] text-white rounded-3xl border border-white/20 p-7 sm:p-8 shadow-2xl relative">
+                
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedPortal(null)}
+                  className="absolute top-5 right-5 text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                {/* Portal Monogram */}
+                <div className="w-12 h-12 rounded-2xl bg-white/10 text-white flex items-center justify-center mx-auto mb-3 shadow-md border border-white/15">
+                  {selectedPortal === 'student' && <GraduationCap className="w-6 h-6 text-white" />}
+                  {selectedPortal === 'officer' && <Users className="w-6 h-6 text-white" />}
+                  {selectedPortal === 'admin' && <Shield className="w-6 h-6 text-white" />}
+                </div>
+
+                <div className="text-center mb-5">
+                  <h3 className="font-poppins font-bold text-lg text-white uppercase tracking-wider">
+                    {selectedPortal === 'student' && 'Student Portal Sign In'}
+                    {selectedPortal === 'officer' && 'Officer / DGRC Sign In'}
+                    {selectedPortal === 'admin' && 'Admin & Directorate Sign In'}
+                  </h3>
+                  <p className="text-xs text-neutral-400 mt-1">
+                    Enter institutional credentials or use 1-click access
+                  </p>
+                </div>
+
+                {/* Error Banner */}
+                {error && (
+                  <div className="mb-4 p-2.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-200 text-xs font-medium">
+                    {error}
+                  </div>
+                )}
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-300 mb-1.5 uppercase tracking-wider">
+                      {selectedPortal === 'student' ? 'Register / Roll Number' : 'Staff / Faculty ID'}
+                    </label>
+                    <input
+                      type="text"
+                      value={registerNumber}
+                      onChange={(e) => {
+                        setRegisterNumber(e.target.value);
+                        setError('');
+                      }}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-white/20 bg-white/5 text-sm text-white placeholder:text-neutral-500 focus:bg-white/10 focus:border-white focus:outline-none transition-all uppercase font-mono"
+                      autoFocus
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-300 mb-1.5 uppercase tracking-wider">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          setError('');
+                        }}
+                        className="w-full px-3.5 pr-10 py-2.5 rounded-xl border border-white/20 bg-white/5 text-sm text-white placeholder:text-neutral-500 focus:bg-white/10 focus:border-white focus:outline-none transition-all"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-white cursor-pointer"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-4 rounded-xl bg-white hover:bg-neutral-200 text-black text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 mt-2 cursor-pointer active:scale-95"
+                  >
+                    <span>Sign In</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  {/* 1-Click Fast Demo Login Button */}
+                  <div className="pt-3 border-t border-white/15">
+                    <button
+                      type="button"
+                      onClick={() => handleQuickDemoLogin(selectedPortal)}
+                      className="w-full py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-neutral-200 hover:text-white border border-white/20 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>⚡ Instant 1-Click Access ({selectedPortal === 'student' ? 'Adhikeshav A S' : selectedPortal === 'officer' ? 'Dr. B. Ben Sujitha' : 'Prof. M. S. Pillai'})</span>
+                    </button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          )}
 
         </div>
       )}
