@@ -82,18 +82,17 @@ export default function LoginPage({ onLogin }) {
     <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden selection:bg-white selection:text-black">
       
       {/* ============================================================== */}
-      {/* CINEMATIC BLACK & WHITE CAMPUS BACKGROUND (FROM USER PHOTO)    */}
+      {/* CAMPUS BACKGROUND WITH BLACK SCREEN DOMINATING                 */}
       {/* ============================================================== */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      <div className="fixed inset-0 pointer-events-none z-0 bg-black overflow-hidden">
         <img 
           src={campusPhoto} 
           alt="Noorul Islam Centre for Higher Education Campus" 
-          className="w-full h-full object-cover object-center filter grayscale contrast-[135%] brightness-[0.40] scale-105 transform duration-1000 ease-out"
+          className="w-full h-full object-cover object-center opacity-40 filter contrast-125 brightness-90 transform scale-100 transition-all duration-700"
         />
-        {/* Deep Vignette & Dark Atmospheric Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,rgba(0,0,0,0.75)_95%)]" />
+        {/* Dominant Black Overlays & Center Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.35)_0%,rgba(0,0,0,0.88)_100%)]" />
       </div>
 
       {/* ============================================================== */}
