@@ -68,9 +68,9 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
     priorityOption: PRIORITY_SLAS[1].label,
 
     // Case Particulars
-    subject: 'End-Semester Examination Hall Ticket Withheld Erroneously Despite Meeting 78% Attendance',
+    subject: '',
     incidentDate: new Date().toISOString().split('T')[0],
-    reliefSought: 'I have maintained 78% verified attendance in Course CS-602 (Distributed Systems). However, the ERP portal displays "Debarred due to Attendance Shortage". The end-semester examinations commence on Thursday. The medical leave certificate approved by the Dean\'s office on 14th Feb was not reconciled into the system. I request immediate issuance of my provisional examination hall ticket and authorization to appear in all scheduled end-semester examinations under Examination Ordinance Sec. 8.3.',
+    reliefSought: '',
     isAnonymous: false
   });
 
@@ -79,6 +79,17 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    setError('');
+  };
+
+  // Reset subject and redressal option box to empty whenever category changes
+  const handleCategoryChange = (newCategory) => {
+    setFormData(prev => ({
+      ...prev,
+      categoryOption: newCategory,
+      subject: '',
+      reliefSought: ''
+    }));
     setError('');
   };
 
@@ -94,12 +105,21 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       return;
     }
 
+    if (!formData.subject.trim()) {
+      setError('Please provide a subject for your grievance.');
+      return;
+    }
+    if (!formData.reliefSought.trim()) {
+      setError('Please specify the redressal or remedy sought.');
+      return;
+    }
+
     // Match selected category object
     const matchedCategory = GRIEVANCE_CATEGORIES.find(c => c.label === formData.categoryOption);
-    const selectedCategory = matchedCategory ? matchedCategory.category : CATEGORIES.EXAMINATION;
+    const selectedCategory = matchedCategory ? matchedCategory.category : CATEGORIES.ACADEMIC;
 
-    const subjectText = formData.subject.trim() || 'Examination and Hall Ticket Issue';
-    const fullStatement = formData.reliefSought.trim() || subjectText;
+    const subjectText = formData.subject.trim();
+    const fullStatement = formData.reliefSought.trim();
 
     const newDocket = onSubmitGrievance({
       studentName: formData.studentName.trim(),
@@ -342,7 +362,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
               </label>
               <select
                 value={formData.categoryOption}
-                onChange={(e) => handleInputChange('categoryOption', e.target.value)}
+                onChange={(e) => handleCategoryChange(e.target.value)}
                 className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white/30 transition-colors"
               >
                 {GRIEVANCE_CATEGORIES.map((cat) => (
@@ -394,7 +414,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
                 type="text"
                 value={formData.subject}
                 onChange={(e) => handleInputChange('subject', e.target.value)}
-                placeholder="e.g. Examination and Hall Ticket Issue"
+                placeholder="Enter brief subject of your grievance..."
                 className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors"
               />
             </div>
@@ -423,7 +443,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
               rows={3}
               value={formData.reliefSought}
               onChange={(e) => handleInputChange('reliefSought', e.target.value)}
-              placeholder="e.g. Issue provisional examination hall ticket and reconcile attendance records..."
+              placeholder="Specify the issue encountered and the exact redressal or remedy sought..."
               className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors resize-none leading-relaxed"
             />
           </div>
