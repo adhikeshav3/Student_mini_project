@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, ArrowRight, ArrowLeft, ShieldCheck, Scale, Clock, Lock, User, GraduationCap, Users, Shield, X, CheckCircle2 } from 'lucide-react';
 import { UNIVERSITY_OFFICERS } from '../data/mockGrievances';
 import highResCampusPhoto from '../assets/niche_highres.png';
-import nicheLogo from '../assets/niche_logo.jpg';
+import nicheLogo from '../assets/niche_logo.png';
 
 export default function LoginPage({ onLogin }) {
   // 'gateway' (Starting Page with 4K HD Campus) | 'portal_select' (Separate Minimal Sign-In Portal Select Page)
@@ -255,12 +255,12 @@ export default function LoginPage({ onLogin }) {
               NOORUL ISLAM CENTRE FOR HIGHER EDUCATION
             </div>
 
-            {/* Official NICHE University Logo in Top Right Corner */}
-            <div className="bg-white/95 px-2.5 py-1 rounded-lg border border-white/30 shadow-md flex items-center justify-center">
+            {/* Official NICHE University Logo (Transparent 4K) in Top Right Corner */}
+            <div className="flex items-center justify-end">
               <img 
                 src={nicheLogo} 
                 alt="Noorul Islam Centre for Higher Education" 
-                className="h-6 sm:h-7 object-contain"
+                className="h-8 sm:h-9 md:h-10 object-contain filter drop-shadow-[0_2px_8px_rgba(255,255,255,0.30)] hover:scale-105 transition-transform"
               />
             </div>
           </header>
