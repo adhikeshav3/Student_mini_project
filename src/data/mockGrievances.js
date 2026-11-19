@@ -66,7 +66,7 @@ export const INITIAL_GRIEVANCES = [
       orderNumber: 'APX/COE/RED/2026/049',
       date: '2026-10-23',
       authorityName: 'Dr. Savita Nambiar',
-      designation: 'Controller of Examinations, Apex University',
+      designation: 'Controller of Examinations, NICHE',
       statutoryCitation: 'Examination Ordinance Sec. 8.3 & Academic Regulations 2024',
       findingsSummary: 'Upon scrutiny of the medical sanction records endorsed by the University Health Centre on 14-Feb-2026, the aggregate attendance of student Aarav Sharma stands revised to 78.4%, which satisfies the mandatory threshold.',
       directives: [
@@ -125,7 +125,7 @@ export const INITIAL_GRIEVANCES = [
         step: 'Bank Ledger Reconciled',
         timestamp: '2026-10-21 03:20 PM',
         actor: 'Finance & Accounts Division',
-        note: 'SBI Gateway Nodal Officer confirmed duplicate credit into Apex University Main Collection A/c.'
+        note: 'SBI Gateway Nodal Officer confirmed duplicate credit into NICHE Main Collection A/c.'
       },
       {
         step: 'Formal Resolution Order Dispatched',
@@ -144,7 +144,7 @@ export const INITIAL_GRIEVANCES = [
       orderNumber: 'APX/FIN/REF/2026/182',
       date: '2026-10-23',
       authorityName: 'Mr. R. K. Bhattacharya',
-      designation: 'Chief Finance Officer, Apex University',
+      designation: 'Chief Finance Officer, NICHE',
       statutoryCitation: 'Finance Division Circular 2024/09, Clause 4.2 (Electronic Fee Reconciliation)',
       findingsSummary: 'Verification of electronic payment clearing logs for transaction dated 10-Oct-2026 confirms that reference SBIN38291048291 was an unintended duplicate settlement.',
       directives: [

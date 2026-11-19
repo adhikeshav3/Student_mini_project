@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, FileText, ArrowRight, ShieldCheck, CheckCircle2, Clock, Lock } from 'lucide-react';
+import { Search, ArrowUpRight } from 'lucide-react';
 
 export default function HeroBanner({ onSearchDocket, onNavigate, grievances = [] }) {
   const [searchInput, setSearchInput] = useState('');
@@ -11,148 +11,96 @@ export default function HeroBanner({ onSearchDocket, onNavigate, grievances = []
     }
   };
 
-  const sampleDockets = grievances.slice(0, 3).map(g => g.id);
-
   return (
-    <div className="relative bg-[#060A14] text-white overflow-hidden border-b border-white/10 py-10 md:py-14">
-      {/* Background Architectural Subtle Texture & Gradients */}
-      <div 
-        className="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none filter grayscale contrast-125"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80')`
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#04070D] via-[#070D18]/95 to-[#04070D] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(26,45,77,0.2)_0%,transparent_75%)] pointer-events-none" />
+    <div className="relative py-14 sm:py-20 px-6 max-w-7xl mx-auto">
+      {/* Hero Headline - Minimal, confident, Poppins */}
+      <div className="max-w-3xl mb-14">
+        <p className="text-[11px] uppercase tracking-[0.25em] text-neutral-400 font-medium mb-4">
+          Statutory Student Grievance Redressal
+        </p>
+        <h1 className="font-poppins font-bold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] mb-5">
+          Student rights protected.
+          <span className="block text-neutral-400 mt-2 font-normal">Transparent resolution.</span>
+        </h1>
+        <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed max-w-2xl">
+          Direct institutional redressal under official UGC regulations. Submit petitions, monitor real-time review status, and receive legally certified resolution orders.
+        </p>
+      </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+      {/* Two Action Cards - buio minimal aesthetic */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
-        {/* Main Clean Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-crest-gold/15 text-crest-goldLight text-xs font-bold uppercase tracking-wider border border-crest-gold/30 mb-3 shadow-sm">
-            <ShieldCheck className="w-3.5 h-3.5 text-crest-gold" />
-            Official University Student Grievance Portal
+        {/* Card 1: File Grievance */}
+        <div 
+          onClick={() => onNavigate('submit')}
+          className="group relative p-8 sm:p-10 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.04] transition-all duration-300 cursor-pointer flex flex-col justify-between"
+        >
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <span className="text-xs uppercase tracking-[0.2em] font-mono text-neutral-400">01 / Petition</span>
+              <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-neutral-400 group-hover:text-white group-hover:border-white/30 transition-all">
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </div>
+            </div>
+            <h2 className="font-poppins text-2xl sm:text-3xl font-medium text-white mb-3">
+              File a Grievance
+            </h2>
+            <p className="text-sm text-neutral-400 font-light leading-relaxed">
+              Submit issues regarding academics, examinations, fee structures, or campus facilities. Identity protection and anonymous filing available.
+            </p>
           </div>
           
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-white tracking-tight leading-tight">
-            How can we help you today?
-          </h1>
-          
-          <p className="text-neutral-300 text-sm sm:text-base mt-2 font-normal leading-relaxed">
-            Report academic, examination, hostel, or fee issues. Petitions are automatically triaged under UGC regulations with legally binding resolution orders.
-          </p>
+          <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between text-xs text-neutral-400">
+            <span>SLA: 24–72 Hour Turnaround</span>
+            <span className="text-white font-medium group-hover:underline">Proceed →</span>
+          </div>
         </div>
 
-        {/* The Two Main Action Cards: Sleek Dark Glassmorphism */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
-          
-          {/* Card 1: Lodge Complaint */}
-          <div 
-            onClick={() => onNavigate('submit')}
-            className="bg-[#0E1626]/85 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-white shadow-2xl border-2 border-crest-gold/40 hover:border-crest-gold hover:shadow-[0_0_35px_rgba(197,155,39,0.25)] transition-all cursor-pointer group flex flex-col justify-between"
-          >
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-crest-gold/15 text-crest-goldLight flex items-center justify-center mb-4 border border-crest-gold/30 group-hover:scale-110 transition-transform">
-                <FileText className="w-6 h-6 text-crest-gold" />
-              </div>
-
-              <h2 className="text-xl sm:text-2xl font-bold font-serif text-white group-hover:text-crest-goldLight transition-colors">
-                1. File a New Complaint
-              </h2>
-
-              <p className="text-xs sm:text-sm text-neutral-300 mt-2 leading-relaxed">
-                Facing an issue with exams, admit cards, fees, hostels, or faculty? Submit in 2 minutes. You can also hide your name completely for safety.
-              </p>
+        {/* Card 2: Track Status */}
+        <div className="p-8 sm:p-10 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <span className="text-xs uppercase tracking-[0.2em] font-mono text-neutral-400">02 / Investigation</span>
+              <span className="text-xs text-neutral-400 font-mono">Live SLA Clock</span>
             </div>
-
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-              <span className="text-xs font-semibold text-neutral-400">
-                🔒 Identity Protection Available
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-crest-gold text-crest-deep text-xs font-bold hover:bg-crest-goldLight transition-all shadow-md">
-                Start Complaint
-                <ArrowRight className="w-3.5 h-3.5" />
-              </span>
-            </div>
+            <h2 className="font-poppins text-2xl sm:text-3xl font-medium text-white mb-3">
+              Track Docket
+            </h2>
+            <p className="text-sm text-neutral-400 font-light leading-relaxed mb-6">
+              Enter your tracking reference number to inspect case timeline, officer notes, hearing schedules, and authorized orders.
+            </p>
           </div>
 
-          {/* Card 2: Track Complaint */}
-          <div className="bg-[#0E1626]/85 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-white shadow-2xl border-2 border-white/15 hover:border-white/35 hover:shadow-[0_0_35px_rgba(255,255,255,0.1)] transition-all flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-4 border border-emerald-500/30">
-                <Search className="w-6 h-6 text-emerald-400" />
-              </div>
-
-              <h2 className="text-xl sm:text-2xl font-bold font-serif text-white">
-                2. Track Existing Complaint
-              </h2>
-
-              <p className="text-xs sm:text-sm text-neutral-300 mt-2 leading-relaxed">
-                Enter your Docket Tracking ID to check live progress, see your deadline timer, or download your official signed resolution order.
-              </p>
+          <form onSubmit={handleSearch} className="mt-2">
+            <div className="flex items-center gap-2 bg-black/60 border border-white/10 rounded-xl p-1.5 focus-within:border-white/30 transition-colors">
+              <Search className="w-4 h-4 text-neutral-400 ml-3 shrink-0" />
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Enter Docket ID (e.g. NICHE-2025-0104)"
+                className="w-full bg-transparent px-2 py-2 text-xs text-white placeholder-neutral-500 font-mono focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-white text-black text-xs font-medium rounded-lg hover:bg-neutral-200 transition-colors shrink-0 cursor-pointer"
+              >
+                Track
+              </button>
             </div>
-
-            {/* Quick Track Input Bar */}
-            <form onSubmit={handleSearch} className="mt-6 pt-4 border-t border-white/10">
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="e.g. NICHE-2026-GRV-8194"
-                  className="flex-1 px-3 py-2 rounded-lg border border-white/20 bg-[#152033] text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/20 uppercase font-mono"
-                />
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-white hover:bg-neutral-200 text-black rounded-lg text-xs font-bold shrink-0 transition-colors shadow-md cursor-pointer"
-                >
-                  Check Status
-                </button>
-              </div>
-
-              {/* Sample 1-Click Test Button */}
-              <div className="mt-2.5 flex items-center justify-between text-[11px] text-neutral-400">
-                <span>Quick demo test:</span>
+            {grievances.length > 0 && (
+              <div className="mt-3 flex items-center gap-2 text-[11px] text-neutral-400 font-mono">
+                <span>Recent:</span>
                 <button
                   type="button"
-                  onClick={() => onSearchDocket(sampleDockets[0] || 'NICHE-2026-GRV-8194')}
-                  className="text-crest-goldLight font-bold hover:underline font-mono cursor-pointer"
+                  onClick={() => onSearchDocket(grievances[0].id)}
+                  className="text-neutral-300 hover:text-white underline cursor-pointer"
                 >
-                  ⚡ Open Demo Case →
+                  {grievances[0].id}
                 </button>
               </div>
-            </form>
-          </div>
-
-        </div>
-
-        {/* 3-Step Simple Process Banner */}
-        <div className="max-w-4xl mx-auto bg-white/[0.04] border border-white/10 rounded-xl p-4 text-xs backdrop-blur-md">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center sm:text-left">
-            <div className="flex items-center sm:items-start gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-crest-gold text-crest-deep font-bold flex items-center justify-center shrink-0 text-xs">1</span>
-              <div>
-                <strong className="text-white block">Submit in 2 Minutes</strong>
-                <span className="text-neutral-400 text-[11px]">Attach proof & state what happened</span>
-              </div>
-            </div>
-
-            <div className="flex items-center sm:items-start gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-crest-gold text-crest-deep font-bold flex items-center justify-center shrink-0 text-xs">2</span>
-              <div>
-                <strong className="text-white block">24h – 48h Strict Deadline</strong>
-                <span className="text-neutral-400 text-[11px]">System routes straight to Dean</span>
-              </div>
-            </div>
-
-            <div className="flex items-center sm:items-start gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-crest-gold text-crest-deep font-bold flex items-center justify-center shrink-0 text-xs">3</span>
-              <div>
-                <strong className="text-white block">Signed Official Order</strong>
-                <span className="text-neutral-400 text-[11px]">Download printable decree with seals</span>
-              </div>
-            </div>
-          </div>
+            )}
+          </form>
         </div>
 
       </div>

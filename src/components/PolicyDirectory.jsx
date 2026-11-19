@@ -81,7 +81,7 @@ export default function PolicyDirectory() {
           University Grievance Charter & Statutory Bylaws
         </h2>
         <p className="text-sm text-institutional-600 mt-1 max-w-3xl leading-relaxed">
-          Comprehensive legal provisions, rights of appeal, and statutory operational standards governing student welfare, examination evaluations, and residential facilities at Apex University.
+          Comprehensive legal provisions, rights of appeal, and statutory operational standards governing student welfare, examination evaluations, and residential facilities at Noorul Islam Centre for Higher Education (NICHE).
         </p>
       </div>
 

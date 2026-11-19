@@ -22,7 +22,7 @@ import {
   resetToDefaults 
 } from './services/storageService';
 
-import { ShieldCheck, CheckCircle2, Clock, Scale, BookOpen, AlertCircle } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function App() {
   const [grievances, setGrievances] = useState([]);
@@ -209,22 +209,22 @@ export default function App() {
               grievances={grievances}
             />
 
-            {/* Quick Grievance Inspection Strip */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10">
-              <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
+            {/* Minimal Docket Stream */}
+            <div className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
+              <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-bold font-serif text-white">
-                    Active Grievance Redressal Pipeline
+                  <h2 className="font-poppins text-lg font-medium text-white tracking-tight">
+                    Active Docket Pipeline
                   </h2>
-                  <p className="text-xs text-neutral-400 mt-0.5">
-                    Live dockets actively under investigation or statutory enforcement.
+                  <p className="text-xs text-neutral-400 mt-1">
+                    Live summary of statutory matters currently under review
                   </p>
                 </div>
                 <button
                   onClick={() => setActiveTab('track')}
-                  className="text-xs font-bold text-crest-goldLight hover:underline flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-neutral-400 hover:text-white transition-colors cursor-pointer font-mono"
                 >
-                  View Full Docket Registry →
+                  View All ({grievances.length}) →
                 </button>
               </div>
 
@@ -236,84 +236,30 @@ export default function App() {
                       setSelectedDocketId(g.id);
                       setActiveTab('track');
                     }}
-                    className="bg-[#0E1524]/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-lg hover:shadow-2xl hover:border-crest-gold/50 transition-all cursor-pointer group text-white"
+                    className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.04] transition-all cursor-pointer group flex flex-col justify-between"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-bold text-neutral-200 bg-white/10 px-2 py-0.5 rounded border border-white/15">
-                        {g.id}
-                      </span>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                        g.status === 'Resolved' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
-                        g.status === 'Hearing Scheduled' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
-                        'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                      }`}>
-                        {g.status}
-                      </span>
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors">
+                          {g.id}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded border border-white/10 text-neutral-300">
+                          {g.status}
+                        </span>
+                      </div>
+
+                      <h3 className="text-sm font-medium text-white line-clamp-2 leading-relaxed mb-4">
+                        {g.subject}
+                      </h3>
                     </div>
 
-                    <h3 className="font-serif font-bold text-sm text-white group-hover:text-crest-goldLight transition-colors line-clamp-2 leading-snug">
-                      {g.subject}
-                    </h3>
-
-                    <p className="text-xs text-neutral-400 mt-2 font-medium">
-                      {g.category}
-                    </p>
-
-                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px]">
-                      <span className="text-neutral-400">Applicant: <strong className="text-white">{g.studentName.split(' ')[0]}</strong></span>
-                      <span className="font-bold text-red-300 bg-red-950/40 px-2 py-0.5 rounded border border-red-500/30">
-                        {g.priority}
-                      </span>
+                    <div className="flex items-center justify-between text-xs text-neutral-400 pt-4 border-t border-white/[0.06] font-mono text-[11px]">
+                      <span>{g.category}</span>
+                      <span className="text-neutral-400">{g.priority}</span>
                     </div>
                   </div>
                 ))}
               </div>
-
-              {/* Three Institutional Pillars */}
-              <div className="mt-14 pt-10 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0 border border-white/15">
-                    <Scale className="w-6 h-6 text-crest-gold" />
-                  </div>
-                  <div>
-                    <h4 className="font-serif font-bold text-base text-white">
-                      Autonomous Standing Committees
-                    </h4>
-                    <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
-                      Statutory committees presided by University Deans and Controllers ensure that no administrative conflict hinders objective student justice.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0 border border-white/15">
-                    <Clock className="w-6 h-6 text-crest-goldLight" />
-                  </div>
-                  <div>
-                    <h4 className="font-serif font-bold text-base text-white">
-                      Automated Turnaround SLA Watchdog
-                    </h4>
-                    <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
-                      Rigorous countdown clocks enforce 24-hour response on critical safety issues and 48-hour delivery on examination admit cards.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0 border border-white/15">
-                    <ShieldCheck className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-serif font-bold text-base text-white">
-                      Statutory Order Certification
-                    </h4>
-                    <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
-                      Official resolution orders carry university seal stamps, authorized digital signatures, and direct mandates for immediate department execution.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         )}

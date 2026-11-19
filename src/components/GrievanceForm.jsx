@@ -189,7 +189,7 @@ export default function GrievanceForm({ onSubmitGrievance, onTrackGrievance }) {
         <div className="flex items-center justify-between flex-wrap gap-2 mb-2">
           <div className="flex items-center gap-2 text-xs font-semibold text-crest-goldDark uppercase tracking-wider">
             <Building2 className="w-4 h-4 text-crest-gold" />
-            <span>Apex University Portal</span>
+            <span>NICHE</span>
             <span>/</span>
             <span>Statutory Grievance Filing</span>
           </div>

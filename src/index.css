@@ -20,22 +20,116 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a101d;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e2c45;
+  background: #1f1f1f;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2e4368;
+  background: #333333;
+}
+
+/* Buio Minimal Dark System Architecture Rules */
+.bg-white {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  color: #f3f4f6 !important;
+}
+
+/* Keep designated white buttons and contrast pills crisp */
+button.bg-white, 
+a.bg-white, 
+.btn-white,
+span.bg-white,
+div.bg-white.text-black {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Dark typography scale */
+.text-crest-navy, 
+.text-institutional-900, 
+.text-institutional-800 {
+  color: #ffffff !important;
+}
+
+.text-institutional-700, 
+.text-institutional-600, 
+.text-institutional-500 {
+  color: #a3a3a3 !important;
+}
+
+.text-institutional-400 {
+  color: #737373 !important;
+}
+
+/* Dark borders and separators */
+.border-institutional-100, 
+.border-institutional-200, 
+.border-institutional-300 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Dark background containers */
+.bg-institutional-50, 
+.bg-institutional-100 {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.bg-crest-navy {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
+}
+
+.bg-crest-deep {
+  background-color: #000000 !important;
+}
+
+.bg-crest-blue {
+  background-color: #141414 !important;
+}
+
+/* Inputs, textareas, and selects */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="date"], 
+select, 
+textarea {
+  background-color: #0a0a0a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+input::placeholder, 
+textarea::placeholder {
+  color: #737373 !important;
+}
+
+/* Remove heavy shadows in favor of crisp borders */
+.shadow-elevated, 
+.shadow-md, 
+.shadow-lg, 
+.shadow-2xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* Print Styling for Official Resolution Orders */
 @media print {
   body {
     background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .bg-white {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  .text-crest-navy, 
+  .text-institutional-900, 
+  .text-institutional-800,
+  .text-institutional-700 {
     color: #000000 !important;
   }
   .no-print {
