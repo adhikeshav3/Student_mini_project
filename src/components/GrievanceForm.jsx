@@ -65,12 +65,12 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
     program: DEGREE_PROGRAMS[0],
     semester: 'Semester 7',
     categoryOption: GRIEVANCE_CATEGORIES[0].label,
-    priorityOption: PRIORITY_SLAS[0].label,
+    priorityOption: PRIORITY_SLAS[1].label,
 
     // Case Particulars
-    subject: 'Examination and Hall Ticket Issue',
+    subject: 'End-Semester Examination Hall Ticket Withheld Erroneously Despite Meeting 78% Attendance',
     incidentDate: new Date().toISOString().split('T')[0],
-    reliefSought: '',
+    reliefSought: 'I have maintained 78% verified attendance in Course CS-602 (Distributed Systems). However, the ERP portal displays "Debarred due to Attendance Shortage". The end-semester examinations commence on Thursday. The medical leave certificate approved by the Dean\'s office on 14th Feb was not reconciled into the system. I request immediate issuance of my provisional examination hall ticket and authorization to appear in all scheduled end-semester examinations under Examination Ordinance Sec. 8.3.',
     isAnonymous: false
   });
 
