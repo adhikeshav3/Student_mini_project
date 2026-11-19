@@ -32,6 +32,7 @@ export default {
         }
       },
       fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
         sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
         serif: ['Merriweather', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace']
