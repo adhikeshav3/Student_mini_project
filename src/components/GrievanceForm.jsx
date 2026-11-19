@@ -69,7 +69,6 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
 
     // Case Particulars
     incidentDate: new Date().toISOString().split('T')[0],
-    subject: '',
     reliefSought: '',
     isAnonymous: false
   });
@@ -93,8 +92,8 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       setError('Please provide your contact phone number.');
       return;
     }
-    if (!formData.subject.trim()) {
-      setError('Please provide a subject summary.');
+    if (!formData.reliefSought.trim()) {
+      setError('Please specify the issue encountered and relief sought.');
       return;
     }
 
@@ -102,8 +101,8 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
     const matchedCategory = GRIEVANCE_CATEGORIES.find(c => c.label === formData.categoryOption);
     const selectedCategory = matchedCategory ? matchedCategory.category : CATEGORIES.ACADEMIC;
 
-    // Statement formed from relief sought or subject
-    const fullStatement = formData.reliefSought.trim() || formData.subject.trim();
+    const fullStatement = formData.reliefSought.trim();
+    const derivedSubject = fullStatement.length > 80 ? `${fullStatement.slice(0, 77)}...` : fullStatement;
 
     const newDocket = onSubmitGrievance({
       studentName: formData.studentName.trim(),
@@ -114,7 +113,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       semester: `${formData.semester}, ${formData.program}`,
       category: selectedCategory,
       priority: formData.priorityOption,
-      subject: formData.subject.trim(),
+      subject: derivedSubject,
       statement: fullStatement,
       incidentDate: formData.incidentDate,
       isAnonymous: formData.isAnonymous,
@@ -387,35 +386,17 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            
-            {/* Subject (2 Columns) */}
-            <div className="sm:col-span-2">
-              <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
-                Subject Headline <span className="text-white/40">*</span>
-              </label>
-              <input
-                type="text"
-                value={formData.subject}
-                onChange={(e) => handleInputChange('subject', e.target.value)}
-                placeholder="e.g. End-Semester Admit Card Withheld Despite Valid Attendance"
-                className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors"
-              />
-            </div>
-
-            {/* Date of Incident (1 Column) */}
-            <div>
-              <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
-                Date of Incident
-              </label>
-              <input
-                type="date"
-                value={formData.incidentDate}
-                onChange={(e) => handleInputChange('incidentDate', e.target.value)}
-                className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white/30 transition-colors font-mono"
-              />
-            </div>
-
+          {/* Date of Incident */}
+          <div>
+            <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
+              Date of Incident
+            </label>
+            <input
+              type="date"
+              value={formData.incidentDate}
+              onChange={(e) => handleInputChange('incidentDate', e.target.value)}
+              className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white/30 transition-colors font-mono"
+            />
           </div>
 
           {/* Specific Remedy / Relief Sought */}
