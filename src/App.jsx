@@ -73,11 +73,7 @@ export default function App() {
       'Signed In Successfully',
       `Welcome, ${user.name} (${user.id}).`
     );
-    if (user.role === 'officer') {
-      setActiveTab('workbench');
-    } else {
-      setActiveTab('home');
-    }
+    setActiveTab('home');
   };
 
   const handleLogout = () => {

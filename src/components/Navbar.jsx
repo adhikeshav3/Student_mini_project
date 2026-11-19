@@ -76,32 +76,15 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
         {/* Right Action Items */}
         <div className="flex items-center gap-4">
           
-          {/* Staff Workbench Button */}
-          <button
-            onClick={() => setActiveTab('workbench')}
-            className={`px-3.5 py-1.5 rounded-full text-xs uppercase tracking-wider transition-all border cursor-pointer ${
-              activeTab === 'workbench'
-                ? 'bg-white text-black font-semibold border-white shadow-sm'
-                : 'text-neutral-400 border-white/10 hover:text-white hover:border-white/30 bg-white/[0.02]'
-            }`}
-          >
-            <span>Staff Portal</span>
-            {pendingCount > 0 && (
-              <span className="ml-1.5 px-1.5 py-0.2 bg-red-600 text-white rounded-full text-[9px] font-bold">
-                {pendingCount}
-              </span>
-            )}
-          </button>
-
           {/* Authenticated User & Logout */}
           {currentUser && (
-            <div className="flex items-center gap-3 pl-3 border-l border-white/10">
-              <span className="text-xs text-neutral-400 font-mono hidden lg:inline tracking-wider">
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-neutral-400 font-mono hidden sm:inline tracking-wider">
                 {currentUser.id}
               </span>
               <button
                 onClick={onLogout}
-                className="text-xs uppercase tracking-wider text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                className="text-xs uppercase tracking-wider text-neutral-400 hover:text-white transition-colors cursor-pointer border border-white/10 hover:border-white/30 px-3 py-1.5 rounded-full"
                 title="Sign out of system"
               >
                 Sign Out
