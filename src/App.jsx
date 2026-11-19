@@ -211,6 +211,7 @@ export default function App() {
 
         {activeTab === 'submit' && (
           <GrievanceForm 
+            currentUser={currentUser}
             onSubmitGrievance={handleCreateGrievance}
             onTrackGrievance={(id) => {
               setSelectedDocketId(id);
