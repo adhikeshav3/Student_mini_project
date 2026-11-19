@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, ArrowRight, ArrowLeft, ShieldCheck, Scale, Clock, Lock, User } from 'lucide-react';
 import { UNIVERSITY_OFFICERS } from '../data/mockGrievances';
-import campusPhoto from '../assets/niche_campus.jpg';
 import highResCampusPhoto from '../assets/niche_highres.png';
 
 export default function LoginPage({ onLogin }) {
   // 'gateway' (Starting Page with Black & White Campus) | 'login' (Minimalist Login Card)
   const [viewMode, setViewMode] = useState('gateway');
-  // 'entrance' (Courtyard entrance photo upscaled) | 'hd' (2400x1792 4K Ultra-HD Academic Block)
-  const [bgMode, setBgMode] = useState('entrance');
   
   // Login Form States
   const [loginRole, setLoginRole] = useState('student'); // 'student' | 'officer'
@@ -85,19 +82,17 @@ export default function LoginPage({ onLogin }) {
     <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden selection:bg-white selection:text-black">
       
       {/* ============================================================== */}
-      {/* CAMPUS BACKGROUND WITH PRESERVED FADENESS & ENHANCED CLARITY   */}
+      {/* 4K ULTRA-HD CAMPUS BACKGROUND WITH 5% ENHANCED BLACK DEPTH     */}
       {/* ============================================================== */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-black overflow-hidden">
         <img 
-          src={bgMode === 'hd' ? highResCampusPhoto : campusPhoto} 
+          src={highResCampusPhoto} 
           alt="Noorul Islam Centre for Higher Education Campus" 
-          className={`w-full h-full object-cover object-center opacity-70 filter brightness-[0.80] contrast-120 scale-100 transition-all duration-700 ${
-            bgMode === 'entrance' ? 'blur-[0.4px]' : ''
-          }`}
+          className="w-full h-full object-cover object-center opacity-65 filter brightness-[0.75] contrast-125 scale-100 transition-all duration-700"
         />
-        {/* Exact Preserved Dark Fadeness & Atmospheric Vignette (Untouched) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/60" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.65)_100%)]" />
+        {/* Preserved Dark Fadeness & Atmospheric Vignette (5% Deeper Black Tone) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/65" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.35)_0%,rgba(0,0,0,0.70)_100%)]" />
       </div>
 
       {/* ============================================================== */}
@@ -149,19 +144,11 @@ export default function LoginPage({ onLogin }) {
 
           </main>
 
-          {/* Footer Bar with View Option */}
-          <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 tracking-wider border-t border-white/10 pt-4 gap-2">
+          {/* Footer Bar without dividing line or switch button */}
+          <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 tracking-wider gap-2">
             <div>
               Kumaracoil, Thuckalay, Kanyakumari District, Tamil Nadu - 629 180
             </div>
-            <button
-              type="button"
-              onClick={() => setBgMode(bgMode === 'entrance' ? 'hd' : 'entrance')}
-              className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 hover:text-white transition-all text-[10px] tracking-wider uppercase border border-white/20 cursor-pointer backdrop-blur-md"
-              title="Toggle between Entrance Courtyard and 4K Ultra-HD Academic Block"
-            >
-              {bgMode === 'entrance' ? '✨ Switch to 4K Ultra-HD Campus' : '🏛️ Switch to Entrance Courtyard'}
-            </button>
             <div>
               UGC (Redressal of Grievances of Students) Regulations, 2023
             </div>
