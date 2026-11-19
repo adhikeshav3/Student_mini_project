@@ -32,10 +32,10 @@ export default {
         }
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
-        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+        poppins: ['Poppins', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        serif: ['Merriweather', 'Georgia', 'Cambria', 'serif'],
+        mono: ['JetBrains Mono', 'Consolas', 'Fira Code', 'Courier New', 'monospace']
       },
       boxShadow: {
         'seal': '0 4px 20px -2px rgba(13, 31, 60, 0.15)',
