@@ -231,7 +231,11 @@ export default function App() {
         )}
 
         {activeTab === 'analytics' && (
-          <AnalyticsDashboard grievances={grievances} />
+          <AnalyticsDashboard 
+            grievances={grievances} 
+            onTrackDocket={handleSearchDocket}
+            onNavigate={(tab) => setActiveTab(tab)}
+          />
         )}
 
         {activeTab === 'workbench' && (
