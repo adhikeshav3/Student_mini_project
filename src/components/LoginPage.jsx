@@ -104,10 +104,9 @@ export default function LoginPage({ onLogin }) {
           
           {/* Top Bar */}
           <header className="flex items-center justify-between text-xs tracking-wider">
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+            <div className="flex items-center">
               <span className="font-poppins uppercase tracking-[0.2em] text-[11px] text-neutral-300 font-semibold">
-                NICHE • Deemed to be University
+                NICHE | Deemed to be University
               </span>
             </div>
             <div className="hidden sm:flex items-center gap-4 text-neutral-400 text-[11px] tracking-widest uppercase">
@@ -141,27 +140,6 @@ export default function LoginPage({ onLogin }) {
                 className="px-10 sm:px-12 py-3 sm:py-3.5 border border-white/90 hover:border-white bg-black/40 hover:bg-white text-white hover:text-black uppercase tracking-[0.3em] text-xs font-semibold transition-all duration-300 shadow-2xl backdrop-blur-sm active:scale-95 cursor-pointer"
               >
                 Sign In
-              </button>
-            </div>
-
-            {/* 1-Click Fast Demo Shortcuts for Quick Testing */}
-            <div className="mt-8 sm:mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-center gap-3 text-xs">
-              <span className="text-neutral-400 text-[11px] uppercase tracking-wider block sm:inline">
-                ⚡ Quick 1-Click Demo:
-              </span>
-              <button
-                type="button"
-                onClick={() => handleQuickDemoLogin('student')}
-                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-neutral-200 text-[11px] font-medium tracking-wide transition-all backdrop-blur-sm"
-              >
-                🎓 Student Demo (Adhikeshav)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickDemoLogin('officer')}
-                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-neutral-200 text-[11px] font-medium tracking-wide transition-all backdrop-blur-sm"
-              >
-                🏛️ Staff Demo (HOD - CSE)
               </button>
             </div>
 
