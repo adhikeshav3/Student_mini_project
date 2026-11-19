@@ -202,66 +202,11 @@ export default function App() {
       {/* Tab View Routing */}
       <main className="flex-grow">
         {activeTab === 'home' && (
-          <div>
-            <HeroBanner 
-              onSearchDocket={handleSearchDocket} 
-              onNavigate={(tab) => setActiveTab(tab)}
-              grievances={grievances}
-            />
-
-            {/* Minimal Docket Stream */}
-            <div className="max-w-7xl mx-auto px-6 py-12 border-t border-white/[0.08]">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h2 className="font-poppins text-lg font-medium text-white tracking-tight">
-                    Active Docket Pipeline
-                  </h2>
-                  <p className="text-xs text-neutral-400 mt-1">
-                    Live summary of statutory matters currently under review
-                  </p>
-                </div>
-                <button
-                  onClick={() => setActiveTab('track')}
-                  className="text-xs text-neutral-400 hover:text-white transition-colors cursor-pointer font-mono"
-                >
-                  View All ({grievances.length}) →
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {grievances.slice(0, 3).map((g) => (
-                  <div
-                    key={g.id}
-                    onClick={() => {
-                      setSelectedDocketId(g.id);
-                      setActiveTab('track');
-                    }}
-                    className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.04] transition-all cursor-pointer group flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors">
-                          {g.id}
-                        </span>
-                        <span className="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded border border-white/10 text-neutral-300">
-                          {g.status}
-                        </span>
-                      </div>
-
-                      <h3 className="text-sm font-medium text-white line-clamp-2 leading-relaxed mb-4">
-                        {g.subject}
-                      </h3>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs text-neutral-400 pt-4 border-t border-white/[0.06] font-mono text-[11px]">
-                      <span>{g.category}</span>
-                      <span className="text-neutral-400">{g.priority}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <HeroBanner 
+            onSearchDocket={handleSearchDocket} 
+            onNavigate={(tab) => setActiveTab(tab)}
+            grievances={grievances}
+          />
         )}
 
         {activeTab === 'submit' && (
