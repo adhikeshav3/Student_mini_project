@@ -70,10 +70,8 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
     // Case Particulars
     incidentDate: new Date().toISOString().split('T')[0],
     subject: '',
-    statement: '',
     reliefSought: '',
-    isAnonymous: false,
-    attachment: null
+    isAnonymous: false
   });
 
   const [submittedDocket, setSubmittedDocket] = useState(null);
@@ -82,20 +80,6 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     setError('');
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      setFormData(prev => ({
-        ...prev,
-        attachment: {
-          name: file.name,
-          size: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
-          type: file.type || 'application/octet-stream'
-        }
-      }));
-    }
   };
 
   const handleSubmit = (e) => {
@@ -113,19 +97,13 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       setError('Please provide a subject summary.');
       return;
     }
-    if (!formData.statement.trim()) {
-      setError('Please provide the detailed grievance statement.');
-      return;
-    }
 
     // Match selected category object
     const matchedCategory = GRIEVANCE_CATEGORIES.find(c => c.label === formData.categoryOption);
     const selectedCategory = matchedCategory ? matchedCategory.category : CATEGORIES.ACADEMIC;
 
-    // Full statement with relief sought
-    const fullStatement = formData.reliefSought.trim()
-      ? `${formData.statement.trim()}\n\n[Specific Relief Sought]:\n${formData.reliefSought.trim()}`
-      : formData.statement.trim();
+    // Statement formed from relief sought or subject
+    const fullStatement = formData.reliefSought.trim() || formData.subject.trim();
 
     const newDocket = onSubmitGrievance({
       studentName: formData.studentName.trim(),
@@ -140,7 +118,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       statement: fullStatement,
       incidentDate: formData.incidentDate,
       isAnonymous: formData.isAnonymous,
-      attachments: formData.attachment ? [formData.attachment] : []
+      attachments: []
     });
 
     setSubmittedDocket(newDocket);
@@ -193,9 +171,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
                 setFormData(prev => ({
                   ...prev,
                   subject: '',
-                  statement: '',
-                  reliefSought: '',
-                  attachment: null
+                  reliefSought: ''
                 }));
               }}
               className="px-6 py-2.5 border border-white/10 text-neutral-300 text-xs font-medium rounded-lg hover:border-white/30 hover:text-white transition-colors cursor-pointer"
@@ -442,49 +418,18 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
 
           </div>
 
-          {/* Statement */}
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
-              Statement of Facts <span className="text-white/40">*</span>
-            </label>
-            <textarea
-              rows={4}
-              value={formData.statement}
-              onChange={(e) => handleInputChange('statement', e.target.value)}
-              placeholder="State the detailed sequence of events, personnel involved, and the issue encountered..."
-              className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors resize-none leading-relaxed"
-            />
-          </div>
-
           {/* Specific Remedy / Relief Sought */}
           <div>
             <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
-              Specific Remedy / Relief Sought
+              Specific Remedy / Relief Sought <span className="text-white/40">*</span>
             </label>
-            <input
-              type="text"
+            <textarea
+              rows={3}
               value={formData.reliefSought}
               onChange={(e) => handleInputChange('reliefSought', e.target.value)}
-              placeholder="e.g. Immediate issuance of provisional hall ticket and attendance register reconciliation"
-              className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors"
+              placeholder="Specify the issue encountered and the exact administrative remedy sought..."
+              className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors resize-none leading-relaxed"
             />
-          </div>
-
-          {/* Single Supporting Document */}
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
-              Supporting Document (Optional PDF / Image)
-            </label>
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="block w-full text-xs text-neutral-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-white/10 file:text-white hover:file:bg-white/20 file:cursor-pointer cursor-pointer"
-            />
-            {formData.attachment && (
-              <div className="mt-2 text-xs text-neutral-300 font-mono">
-                Attached: {formData.attachment.name} ({formData.attachment.size})
-              </div>
-            )}
           </div>
 
         </div>
