@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, ArrowRight, ShieldCheck, CheckCircle2, Building, Scale, Clock, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight, ArrowLeft, ShieldCheck, Scale, Clock, Lock, User } from 'lucide-react';
 import { UNIVERSITY_OFFICERS } from '../data/mockGrievances';
 import campusPhoto from '../assets/niche_campus.jpg';
 
 export default function LoginPage({ onLogin }) {
+  // 'gateway' (Starting Page with Black & White Campus) | 'login' (Minimalist Login Card)
+  const [viewMode, setViewMode] = useState('gateway');
+  
+  // Login Form States
   const [loginRole, setLoginRole] = useState('student'); // 'student' | 'officer'
   const [registerNumber, setRegisterNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -38,7 +42,7 @@ export default function LoginPage({ onLogin }) {
     onLogin(user);
   };
 
-  // Instant 1-Click Demo Login for Evaluators & Students
+  // Instant 1-Click Fast Demo Login for Evaluators & Students
   const handleQuickDemoLogin = (type) => {
     if (type === 'student') {
       const studentUser = {
@@ -75,95 +79,139 @@ export default function LoginPage({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F4F6] text-neutral-900 flex flex-col justify-between selection:bg-neutral-900 selection:text-white">
+    <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden selection:bg-white selection:text-black">
       
-      {/* Top Minimal Strip */}
-      <header className="w-full py-3 px-6 border-b border-neutral-200/80 bg-white/70 backdrop-blur-md sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="font-poppins font-medium text-neutral-800 text-[11px] tracking-tight">
-              NICHE Official Grievance Redressal Gateway
-            </span>
-            <span className="text-neutral-400 hidden sm:inline">•</span>
-            <span className="text-neutral-500 hidden sm:inline text-[11px]">
-              NAAC 'A' Grade • UGC Section 3
-            </span>
-          </div>
-          <div className="text-neutral-500 text-[11px] font-sans">
-            Statutory Helpline: <strong className="text-neutral-900 font-medium">04651-205800</strong>
-          </div>
-        </div>
-      </header>
+      {/* ============================================================== */}
+      {/* CINEMATIC BLACK & WHITE CAMPUS BACKGROUND (FROM USER PHOTO)    */}
+      {/* ============================================================== */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <img 
+          src={campusPhoto} 
+          alt="Noorul Islam Centre for Higher Education Campus" 
+          className="w-full h-full object-cover object-center filter grayscale contrast-[135%] brightness-[0.40] scale-105 transform duration-1000 ease-out"
+        />
+        {/* Deep Vignette & Dark Atmospheric Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,rgba(0,0,0,0.75)_95%)]" />
+      </div>
 
-      {/* Main Container - Responsive Minimal Split Layout */}
-      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-10 my-auto">
-        <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      {/* ============================================================== */}
+      {/* VIEW 1: STARTING PAGE (EXACT REPLICA OF LAPTOP SCREEN REFERENCE) */}
+      {/* ============================================================== */}
+      {viewMode === 'gateway' ? (
+        <div className="relative z-10 min-h-screen flex flex-col justify-between p-6 sm:p-10 animate-fadeIn">
           
-          {/* Left Column: Campus Architectural Showcase (Image 2) */}
-          <div className="hidden lg:flex lg:col-span-6 flex-col justify-between h-full space-y-6">
+          {/* Top Bar */}
+          <header className="flex items-center justify-between text-xs tracking-wider">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="font-poppins uppercase tracking-[0.2em] text-[11px] text-neutral-300 font-semibold">
+                NICHE • Deemed to be University
+              </span>
+            </div>
+            <div className="hidden sm:flex items-center gap-4 text-neutral-400 text-[11px] tracking-widest uppercase">
+              <span>NAAC Accredited</span>
+              <span>•</span>
+              <span>UGC Section 3</span>
+              <span>•</span>
+              <span>Helpline: 04651-205800</span>
+            </div>
+          </header>
+
+          {/* Centerpiece Hero (Matching Reference Image) */}
+          <main className="my-auto py-12 flex flex-col items-center justify-center text-center max-w-4xl mx-auto px-4">
             
-            {/* Campus Image Frame */}
-            <div className="relative rounded-[2rem] overflow-hidden border border-neutral-200 shadow-xl bg-neutral-900 group">
-              <img 
-                src={campusPhoto} 
-                alt="Noorul Islam Centre for Higher Education Campus" 
-                className="w-full h-[400px] object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-              
-              {/* Overlay University Badge */}
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-bold tracking-widest uppercase border border-white/30 text-white mb-2">
-                  Campus Kumaracoil • Thuckalay
-                </span>
-                <h3 className="font-poppins text-lg font-bold text-white tracking-tight leading-snug">
-                  Noorul Islam Centre for Higher Education
-                </h3>
-                <p className="font-sans text-xs text-neutral-300 mt-1">
-                  Empowering Students through Transparent, Autonomous & AI-Augmented Grievance Redressal.
-                </p>
-              </div>
+            {/* University Name in Poppins Font */}
+            <h1 className="font-poppins font-bold uppercase tracking-[0.22em] text-white text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.2] drop-shadow-2xl">
+              Noorul Islam Centre For
+              <span className="block mt-2 sm:mt-3">Higher Education</span>
+            </h1>
+
+            {/* Subtitle in Professional Uppercase Tracked Font */}
+            <p className="font-sans uppercase tracking-[0.35em] text-xs sm:text-sm md:text-base font-medium text-neutral-300 mt-5 sm:mt-6 drop-shadow-md max-w-2xl">
+              Student Grievance Redressal Portal
+            </p>
+
+            {/* Outlined "SIGN IN" Button (Exact Match to Reference Photo) */}
+            <div className="mt-8 sm:mt-10 flex flex-col items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setViewMode('login')}
+                className="px-10 sm:px-12 py-3 sm:py-3.5 border border-white/90 hover:border-white bg-black/40 hover:bg-white text-white hover:text-black uppercase tracking-[0.3em] text-xs font-semibold transition-all duration-300 shadow-2xl backdrop-blur-sm active:scale-95 cursor-pointer"
+              >
+                Sign In
+              </button>
             </div>
 
-            {/* 3 Minimal Statutory Feature Chips */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3.5 rounded-2xl bg-white border border-neutral-200/90 shadow-sm flex flex-col justify-between">
-                <Scale className="w-4 h-4 text-neutral-800 mb-2" />
-                <div>
-                  <div className="font-poppins text-xs font-bold text-neutral-900">7 Jurisdictions</div>
-                  <div className="text-[10px] text-neutral-500 leading-tight mt-0.5">UGC 2023 Statutory</div>
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-white border border-neutral-200/90 shadow-sm flex flex-col justify-between">
-                <Clock className="w-4 h-4 text-neutral-800 mb-2" />
-                <div>
-                  <div className="font-poppins text-xs font-bold text-neutral-900">24h / 48h SLA</div>
-                  <div className="text-[10px] text-neutral-500 leading-tight mt-0.5">Autonomous Watchdog</div>
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-white border border-neutral-200/90 shadow-sm flex flex-col justify-between">
-                <ShieldCheck className="w-4 h-4 text-neutral-800 mb-2" />
-                <div>
-                  <div className="font-poppins text-xs font-bold text-neutral-900">Human in Loop</div>
-                  <div className="text-[10px] text-neutral-500 leading-tight mt-0.5">Official Decree</div>
-                </div>
-              </div>
+            {/* 1-Click Fast Demo Shortcuts for Quick Testing */}
+            <div className="mt-8 sm:mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-center gap-3 text-xs">
+              <span className="text-neutral-400 text-[11px] uppercase tracking-wider block sm:inline">
+                ⚡ Quick 1-Click Demo:
+              </span>
+              <button
+                type="button"
+                onClick={() => handleQuickDemoLogin('student')}
+                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-neutral-200 text-[11px] font-medium tracking-wide transition-all backdrop-blur-sm"
+              >
+                🎓 Student Demo (Adhikeshav)
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickDemoLogin('officer')}
+                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-neutral-200 text-[11px] font-medium tracking-wide transition-all backdrop-blur-sm"
+              >
+                🏛️ Staff Demo (HOD - CSE)
+              </button>
             </div>
 
-          </div>
+          </main>
 
-          {/* Right Column: Ultra-Minimal Login Card (Reference Image 1) */}
-          <div className="lg:col-span-6 flex justify-center">
-            <div className="w-full max-w-[400px] bg-white rounded-[2.5rem] border border-neutral-200/80 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] p-7 sm:p-9 relative transition-all">
+          {/* Footer Bar */}
+          <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 tracking-wider border-t border-white/10 pt-4 gap-2">
+            <div>
+              Kumaracoil, Thuckalay, Kanyakumari District, Tamil Nadu - 629 180
+            </div>
+            <div>
+              UGC (Redressal of Grievances of Students) Regulations, 2023
+            </div>
+          </footer>
+
+        </div>
+      ) : (
+
+        /* ============================================================== */
+        /* VIEW 2: MINIMALIST LOGIN CARD (INSPIRED BY REFERENCE IMAGE 1)  */
+        /* ============================================================== */
+        <div className="relative z-10 min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-10 animate-fadeIn">
+          
+          {/* Top Bar with Back Button */}
+          <header className="max-w-7xl w-full mx-auto flex items-center justify-between text-xs py-2">
+            <button
+              type="button"
+              onClick={() => {
+                setViewMode('gateway');
+                setError('');
+              }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all text-xs font-medium cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Portal Home</span>
+            </button>
+            <div className="text-neutral-400 text-[11px] hidden sm:block tracking-wider uppercase">
+              Noorul Islam Centre for Higher Education
+            </div>
+          </header>
+
+          {/* Main Login Card Centerpiece */}
+          <main className="my-auto flex items-center justify-center py-6">
+            <div className="w-full max-w-[410px] bg-white text-neutral-900 rounded-[2.5rem] border border-neutral-200/90 shadow-[0_25px_70px_rgba(0,0,0,0.5)] p-7 sm:p-9 relative transition-all">
               
-              {/* Minimal Dynamic Pill / Phone Mockup Element */}
+              {/* Sleek Dynamic Island / Phone Mockup Element (From Ref Image 1) */}
               <div className="w-16 h-3.5 bg-neutral-900 rounded-full mx-auto mb-6 opacity-90"></div>
 
               {/* Minimalist Circular University Emblem / Monogram */}
-              <div className="w-12 h-12 rounded-full bg-neutral-900 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md">
+              <div className="w-12 h-12 rounded-full bg-neutral-900 text-white flex items-center justify-center mx-auto mb-3 shadow-md">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
                   <circle cx="12" cy="12" r="9" strokeOpacity="0.4" />
                   <path d="M12 3v18" strokeLinecap="round" />
@@ -177,7 +225,7 @@ export default function LoginPage({ onLogin }) {
                 Noorul Islam Centre For Higher Education
               </h2>
 
-              {/* Sub-Title in Professional Font */}
+              {/* Subtitle in Professional Font */}
               <p className="font-sans text-[10.5px] uppercase tracking-[0.22em] font-semibold text-neutral-400 text-center mt-1">
                 Student Grievance Redressal Portal
               </p>
@@ -235,7 +283,7 @@ export default function LoginPage({ onLogin }) {
               {/* Login Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 
-                {/* Email Address / Register Number Input */}
+                {/* Register Number / Staff ID Input */}
                 <div>
                   <label className="block text-xs font-medium text-neutral-700 mb-1.5 font-sans">
                     {loginRole === 'student' ? 'Register / Roll Number' : 'Staff / Faculty ID'}
@@ -279,7 +327,7 @@ export default function LoginPage({ onLogin }) {
                   </div>
                 </div>
 
-                {/* Remember Me & Forgot Password / Need Help */}
+                {/* Remember Me & Help */}
                 <div className="flex items-center justify-between text-xs pt-0.5">
                   <label className="flex items-center gap-2 cursor-pointer text-neutral-600 select-none">
                     <input
@@ -302,20 +350,20 @@ export default function LoginPage({ onLogin }) {
                 {/* Minimalist Dark Pill Button matching Reference Image 1 */}
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 rounded-xl bg-[#18181b] hover:bg-black text-white text-sm font-medium transition-all shadow-sm hover:shadow active:scale-[0.99] flex items-center justify-center gap-2 mt-2"
+                  className="w-full py-3 px-4 rounded-xl bg-[#18181b] hover:bg-black text-white text-sm font-medium transition-all shadow-sm hover:shadow active:scale-[0.99] flex items-center justify-center gap-2 mt-2 cursor-pointer"
                 >
                   <span>Login</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
-                {/* Legal Disclaimer matching Reference Image 1 */}
+                {/* Legal Disclaimer */}
                 <p className="text-[10px] text-neutral-400 text-center leading-relaxed pt-1">
                   By logging in, you agree to our{' '}
                   <span className="text-neutral-700 underline cursor-pointer">Terms of Service</span> and{' '}
                   <span className="text-neutral-700 underline cursor-pointer">Privacy Policy</span>.
                 </p>
 
-                {/* 1-Click Fast Demo Credentials */}
+                {/* 1-Click Fast Demo Shortcuts */}
                 <div className="pt-3 border-t border-neutral-100">
                   <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block text-center mb-2">
                     ⚡ Quick 1-Click Demo Access
@@ -343,15 +391,15 @@ export default function LoginPage({ onLogin }) {
               </form>
 
             </div>
-          </div>
+          </main>
+
+          {/* Bottom Footer */}
+          <footer className="w-full py-2 text-center text-[11px] text-neutral-400">
+            © 2026 Noorul Islam Centre for Higher Education (NICHE). Directorate of Student Grievance Redressal.
+          </footer>
 
         </div>
-      </main>
-
-      {/* Minimal Bottom Strip */}
-      <footer className="w-full py-3 px-6 text-center text-[11px] text-neutral-400 border-t border-neutral-200/80 bg-white/50">
-        © 2026 Noorul Islam Centre for Higher Education (NICHE). Directorate of Student Grievance Redressal.
-      </footer>
+      )}
 
     </div>
   );
