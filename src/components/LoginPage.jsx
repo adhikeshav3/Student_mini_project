@@ -82,17 +82,17 @@ export default function LoginPage({ onLogin }) {
     <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden selection:bg-white selection:text-black">
       
       {/* ============================================================== */}
-      {/* CAMPUS BACKGROUND WITH BLACK SCREEN DOMINATING                 */}
+      {/* CAMPUS BACKGROUND WITH CLEAR VISIBILITY & DARK THEME           */}
       {/* ============================================================== */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-black overflow-hidden">
         <img 
           src={campusPhoto} 
           alt="Noorul Islam Centre for Higher Education Campus" 
-          className="w-full h-full object-cover object-center opacity-40 filter contrast-125 brightness-90 transform scale-100 transition-all duration-700"
+          className="w-full h-full object-cover object-center opacity-75 filter brightness-[0.75] contrast-110 scale-100 transition-all duration-700"
         />
-        {/* Dominant Black Overlays & Center Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.35)_0%,rgba(0,0,0,0.88)_100%)]" />
+        {/* Atmospheric Dark Overlay so text is readable while campus image is clearly visible */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.65)_100%)]" />
       </div>
 
       {/* ============================================================== */}
