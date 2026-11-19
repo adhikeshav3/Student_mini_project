@@ -377,25 +377,10 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
 
         {/* Section 3: Grievance Details & Relief Sought */}
         <div className="space-y-4">
-          <div className="border-b border-white/[0.08] pb-2 flex items-center justify-between">
+          <div className="border-b border-white/[0.08] pb-2">
             <h2 className="text-xs uppercase tracking-[0.2em] font-mono text-neutral-400">
               03 / Grievance Particulars
             </h2>
-            <button
-              type="button"
-              onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  categoryOption: GRIEVANCE_CATEGORIES[0].label,
-                  priorityOption: PRIORITY_SLAS[1].label,
-                  subject: 'Examination and Hall Ticket Withheld',
-                  reliefSought: 'Request urgent issuance of provisional examination hall ticket and attendance reconciliation for upcoming exams.'
-                }));
-              }}
-              className="text-[11px] font-mono text-neutral-400 hover:text-white transition-colors cursor-pointer"
-            >
-              ⚡ Fill Exam & Hall Ticket Example
-            </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
