@@ -7,29 +7,29 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #f8fafc;
-    color: #0f172a;
+    background-color: #060a12;
+    color: #f1f5f9;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Custom Institutional Scrollbar */
+/* Custom Institutional Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #0a101d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #1e2c45;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #2e4368;
 }
 
 /* Print Styling for Official Resolution Orders */

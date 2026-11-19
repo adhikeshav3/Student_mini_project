@@ -165,11 +165,11 @@ export default function App() {
   const pendingActionCount = grievances.filter(g => g.status !== 'Resolved').length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-institutional-900 font-sans selection:bg-crest-gold/20">
+    <div className="min-h-screen flex flex-col bg-[#060A12] text-white font-sans selection:bg-crest-gold/20">
       
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-4 right-4 z-50 max-w-md w-full bg-crest-navy text-white p-4 rounded-xl shadow-2xl border border-crest-gold/50 flex items-start gap-3 animate-slideIn">
+        <div className="fixed top-4 right-4 z-50 max-w-md w-full bg-[#0E1524] text-white p-4 rounded-xl shadow-2xl border border-crest-gold/40 flex items-start gap-3 animate-slideIn">
           <div className="p-1 rounded-lg bg-crest-gold/20 text-crest-goldLight shrink-0 mt-0.5">
             <CheckCircle2 className="w-5 h-5 text-crest-gold" />
           </div>
@@ -177,13 +177,13 @@ export default function App() {
             <h4 className="text-xs font-bold font-serif text-white uppercase tracking-wider">
               {toastMessage.title}
             </h4>
-            <p className="text-xs text-institutional-200 mt-0.5 leading-relaxed">
+            <p className="text-xs text-neutral-300 mt-0.5 leading-relaxed">
               {toastMessage.message}
             </p>
           </div>
           <button 
             onClick={() => setToastMessage(null)}
-            className="text-institutional-400 hover:text-white text-xs px-1"
+            className="text-neutral-400 hover:text-white text-xs px-1 cursor-pointer"
           >
             ✕
           </button>
@@ -213,16 +213,16 @@ export default function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10">
               <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-bold font-serif text-crest-navy">
+                  <h2 className="text-xl sm:text-2xl font-bold font-serif text-white">
                     Active Grievance Redressal Pipeline
                   </h2>
-                  <p className="text-xs text-institutional-600 mt-0.5">
+                  <p className="text-xs text-neutral-400 mt-0.5">
                     Live dockets actively under investigation or statutory enforcement.
                   </p>
                 </div>
                 <button
                   onClick={() => setActiveTab('track')}
-                  className="text-xs font-bold text-crest-navy hover:underline flex items-center gap-1"
+                  className="text-xs font-bold text-crest-goldLight hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   View Full Docket Registry →
                 </button>
@@ -236,32 +236,32 @@ export default function App() {
                       setSelectedDocketId(g.id);
                       setActiveTab('track');
                     }}
-                    className="bg-white p-5 rounded-xl border border-institutional-200 shadow-sm hover:shadow-elevated hover:border-crest-gold/40 transition-all cursor-pointer group"
+                    className="bg-[#0E1524]/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-lg hover:shadow-2xl hover:border-crest-gold/50 transition-all cursor-pointer group text-white"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-bold text-crest-navy bg-institutional-100 px-2 py-0.5 rounded border border-institutional-200">
+                      <span className="font-mono text-xs font-bold text-neutral-200 bg-white/10 px-2 py-0.5 rounded border border-white/15">
                         {g.id}
                       </span>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                        g.status === 'Resolved' ? 'bg-emerald-100 text-emerald-800' :
-                        g.status === 'Hearing Scheduled' ? 'bg-amber-100 text-amber-800' :
-                        'bg-blue-100 text-blue-800'
+                        g.status === 'Resolved' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+                        g.status === 'Hearing Scheduled' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
+                        'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                       }`}>
                         {g.status}
                       </span>
                     </div>
 
-                    <h3 className="font-serif font-bold text-sm text-institutional-900 group-hover:text-crest-navy transition-colors line-clamp-2 leading-snug">
+                    <h3 className="font-serif font-bold text-sm text-white group-hover:text-crest-goldLight transition-colors line-clamp-2 leading-snug">
                       {g.subject}
                     </h3>
 
-                    <p className="text-xs text-institutional-500 mt-2 font-medium">
+                    <p className="text-xs text-neutral-400 mt-2 font-medium">
                       {g.category}
                     </p>
 
-                    <div className="mt-4 pt-3 border-t border-institutional-100 flex items-center justify-between text-[11px]">
-                      <span className="text-institutional-500">Applicant: <strong>{g.studentName.split(' ')[0]}</strong></span>
-                      <span className="font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded">
+                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px]">
+                      <span className="text-neutral-400">Applicant: <strong className="text-white">{g.studentName.split(' ')[0]}</strong></span>
+                      <span className="font-bold text-red-300 bg-red-950/40 px-2 py-0.5 rounded border border-red-500/30">
                         {g.priority}
                       </span>
                     </div>
@@ -270,44 +270,44 @@ export default function App() {
               </div>
 
               {/* Three Institutional Pillars */}
-              <div className="mt-14 pt-10 border-t border-institutional-200 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="mt-14 pt-10 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-crest-navy/5 text-crest-navy flex items-center justify-center shrink-0 border border-crest-navy/15">
-                    <Scale className="w-6 h-6 text-crest-navy" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0 border border-white/15">
+                    <Scale className="w-6 h-6 text-crest-gold" />
                   </div>
                   <div>
-                    <h4 className="font-serif font-bold text-base text-crest-navy">
+                    <h4 className="font-serif font-bold text-base text-white">
                       Autonomous Standing Committees
                     </h4>
-                    <p className="text-xs text-institutional-600 mt-1 leading-relaxed">
+                    <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
                       Statutory committees presided by University Deans and Controllers ensure that no administrative conflict hinders objective student justice.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-crest-navy/5 text-crest-navy flex items-center justify-center shrink-0 border border-crest-navy/15">
-                    <Clock className="w-6 h-6 text-crest-goldDark" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0 border border-white/15">
+                    <Clock className="w-6 h-6 text-crest-goldLight" />
                   </div>
                   <div>
-                    <h4 className="font-serif font-bold text-base text-crest-navy">
+                    <h4 className="font-serif font-bold text-base text-white">
                       Automated Turnaround SLA Watchdog
                     </h4>
-                    <p className="text-xs text-institutional-600 mt-1 leading-relaxed">
+                    <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
                       Rigorous countdown clocks enforce 24-hour response on critical safety issues and 48-hour delivery on examination admit cards.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-crest-navy/5 text-crest-navy flex items-center justify-center shrink-0 border border-crest-navy/15">
-                    <ShieldCheck className="w-6 h-6 text-emerald-700" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0 border border-white/15">
+                    <ShieldCheck className="w-6 h-6 text-emerald-400" />
                   </div>
                   <div>
-                    <h4 className="font-serif font-bold text-base text-crest-navy">
+                    <h4 className="font-serif font-bold text-base text-white">
                       Statutory Order Certification
                     </h4>
-                    <p className="text-xs text-institutional-600 mt-1 leading-relaxed">
+                    <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
                       Official resolution orders carry university seal stamps, authorized digital signatures, and direct mandates for immediate department execution.
                     </p>
                   </div>

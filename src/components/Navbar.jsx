@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import { Building, FileText, Search, BookOpen, BarChart3, Lock, ChevronDown, PhoneCall, LogOut, User } from 'lucide-react';
+import nicheLogo from '../assets/niche_logo.png';
 
 export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, currentUser, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-institutional-200 shadow-sm no-print">
+    <header className="sticky top-0 z-50 bg-[#090E17]/95 backdrop-blur-xl border-b border-white/10 text-white shadow-2xl no-print">
       {/* Top Statutory / Accreditation Strip */}
-      <div className="bg-crest-deep text-white text-[11px] font-medium tracking-wide py-1.5 px-4 sm:px-8 border-b border-institutional-800">
+      <div className="bg-[#03060C] text-neutral-400 text-[11px] font-medium tracking-wide py-1.5 px-4 sm:px-8 border-b border-white/5">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center px-2 py-0.5 rounded bg-crest-gold/20 text-crest-goldLight font-semibold text-[10px] tracking-wider uppercase border border-crest-gold/30">
+            <span className="inline-flex items-center px-2 py-0.5 rounded bg-crest-gold/15 text-crest-goldLight font-semibold text-[10px] tracking-wider uppercase border border-crest-gold/30">
               NAAC ACCREDITED • DEEMED TO BE UNIVERSITY
             </span>
-            <span className="text-institutional-300">
+            <span className="text-neutral-400">
               UGC Act 1956 Section 3 • Noorul Islam Centre for Higher Education (NICHE)
             </span>
           </div>
-          <div className="flex items-center gap-4 text-institutional-300">
+          <div className="flex items-center gap-4 text-neutral-400">
             <span className="flex items-center gap-1.5 hover:text-white transition-colors">
-              <PhoneCall className="w-3 h-3 text-crest-goldLight" />
-              Helpline: <strong className="text-white">04651-205800</strong>
+              <PhoneCall className="w-3 h-3 text-crest-gold" />
+              Helpline: <strong className="text-neutral-200">04651-205800</strong>
             </span>
           </div>
         </div>
       </div>
 
-      {/* Main University Header: Streamlined, Clean & Limited Options */}
+      {/* Main University Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-4">
         
         {/* University Crest & Title */}
@@ -35,7 +36,7 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
           className="flex items-center gap-3 cursor-pointer group"
           title="Return to Home"
         >
-          <div className="w-11 h-11 rounded-lg bg-crest-navy text-crest-goldLight flex items-center justify-center shadow-seal border border-crest-gold/30 p-2 group-hover:border-crest-gold transition-colors shrink-0">
+          <div className="w-11 h-11 rounded-xl bg-white/10 text-crest-goldLight flex items-center justify-center border border-white/15 p-2 group-hover:border-crest-gold transition-colors shrink-0 backdrop-blur-md">
             <svg viewBox="0 0 48 48" fill="none" className="w-full h-full text-current">
               <circle cx="24" cy="24" r="21" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2" />
               <path d="M24 7L10 14V17H38V14L24 7Z" fill="currentColor" opacity="0.9" />
@@ -50,14 +51,14 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-sm sm:text-base md:text-lg font-bold font-serif text-crest-navy tracking-tight group-hover:text-crest-blue transition-colors leading-tight">
+              <h1 className="text-sm sm:text-base md:text-lg font-bold font-serif text-white tracking-tight group-hover:text-crest-goldLight transition-colors leading-tight">
                 NOORUL ISLAM CENTRE FOR HIGHER EDUCATION
               </h1>
-              <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-institutional-100 text-institutional-700 border border-institutional-200">
+              <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-white/10 text-neutral-300 border border-white/15">
                 NICHE
               </span>
             </div>
-            <p className="text-[11px] text-institutional-500 font-medium">
+            <p className="text-[11px] text-neutral-400 font-medium">
               Kumaracoil, Thuckalay • Central Student Grievance Redressal Portal
             </p>
           </div>
@@ -69,10 +70,10 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
           {/* 1. Home */}
           <button
             onClick={() => setActiveTab('home')}
-            className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+            className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTab === 'home'
-                ? 'bg-crest-navy text-white shadow-sm'
-                : 'text-institutional-700 hover:bg-institutional-100'
+                ? 'bg-white/15 text-white border border-white/20 shadow-sm'
+                : 'text-neutral-300 hover:text-white hover:bg-white/10'
             }`}
           >
             Home
@@ -81,10 +82,10 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
           {/* 2. File Complaint */}
           <button
             onClick={() => setActiveTab('submit')}
-            className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'submit'
-                ? 'bg-crest-navy text-white shadow-sm'
-                : 'bg-crest-gold hover:bg-crest-goldLight text-crest-deep shadow-sm'
+                ? 'bg-crest-goldLight text-crest-deep shadow-md'
+                : 'bg-crest-gold hover:bg-crest-goldLight text-crest-deep shadow-md'
             }`}
           >
             <FileText className="w-4 h-4" />
@@ -94,10 +95,10 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
           {/* 3. Track Status */}
           <button
             onClick={() => setActiveTab('track')}
-            className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'track'
-                ? 'bg-crest-navy text-white shadow-sm'
-                : 'text-institutional-700 hover:bg-institutional-100'
+                ? 'bg-white/15 text-white border border-white/20 shadow-sm'
+                : 'text-neutral-300 hover:text-white hover:bg-white/10'
             }`}
           >
             <Search className="w-4 h-4" />
@@ -108,31 +109,31 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className={`px-2.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1 text-institutional-700 hover:bg-institutional-100 ${
-                activeTab === 'policies' || activeTab === 'analytics' ? 'bg-institutional-100 text-crest-navy font-bold' : ''
+              className={`px-2.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1 text-neutral-300 hover:text-white hover:bg-white/10 cursor-pointer ${
+                activeTab === 'policies' || activeTab === 'analytics' ? 'bg-white/15 text-white border border-white/20 font-bold' : ''
               }`}
             >
               <span>More</span>
-              <ChevronDown className="w-3.5 h-3.5 text-institutional-500" />
+              <ChevronDown className="w-3.5 h-3.5 text-neutral-400" />
             </button>
 
             {dropdownOpen && (
               <div 
-                className="absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-xl border border-institutional-200 py-1.5 z-50 animate-scaleIn"
+                className="absolute right-0 mt-1.5 w-48 bg-[#0F1728] rounded-xl shadow-2xl border border-white/15 py-1.5 z-50 animate-scaleIn backdrop-blur-xl"
                 onClick={() => setDropdownOpen(false)}
               >
                 <button
                   onClick={() => setActiveTab('policies')}
-                  className="w-full text-left px-4 py-2 text-xs font-semibold text-institutional-800 hover:bg-institutional-50 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-xs font-semibold text-neutral-200 hover:bg-white/10 hover:text-white flex items-center gap-2 cursor-pointer"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-crest-goldDark" />
+                  <BookOpen className="w-3.5 h-3.5 text-crest-gold" />
                   University Rules & Rights
                 </button>
                 <button
                   onClick={() => setActiveTab('analytics')}
-                  className="w-full text-left px-4 py-2 text-xs font-semibold text-institutional-800 hover:bg-institutional-50 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-xs font-semibold text-neutral-200 hover:bg-white/10 hover:text-white flex items-center gap-2 cursor-pointer"
                 >
-                  <BarChart3 className="w-3.5 h-3.5 text-crest-navy" />
+                  <BarChart3 className="w-3.5 h-3.5 text-blue-400" />
                   Public Statistics
                 </button>
               </div>
@@ -142,14 +143,14 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
           {/* 5. Staff Portal */}
           <button
             onClick={() => setActiveTab('workbench')}
-            className={`ml-1 sm:ml-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 border ${
+            className={`ml-1 sm:ml-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 border cursor-pointer ${
               activeTab === 'workbench'
-                ? 'bg-crest-maroon text-white border-crest-maroon shadow-sm'
-                : 'bg-institutional-50 text-institutional-700 border-institutional-300 hover:bg-institutional-100'
+                ? 'bg-red-600 text-white border-red-500 shadow-md'
+                : 'bg-red-950/40 text-red-300 border-red-500/30 hover:bg-red-900/50'
             }`}
             title="Restricted portal for University Deans & Examination Controllers"
           >
-            <Lock className="w-3.5 h-3.5 text-crest-maroon" />
+            <Lock className="w-3.5 h-3.5 text-red-400" />
             <span>Staff Portal</span>
             {pendingCount > 0 && (
               <span className="px-1.5 py-0.2 bg-red-600 text-white rounded-full text-[10px] font-bold">
@@ -160,17 +161,17 @@ export default function Navbar({ activeTab, setActiveTab, pendingCount = 0, curr
 
           {/* Authenticated User Profile & Logout */}
           {currentUser && (
-            <div className="ml-2 pl-2 border-l border-institutional-200 flex items-center gap-2">
+            <div className="ml-2 pl-2 border-l border-white/15 flex items-center gap-2">
               <span 
-                className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-institutional-100 text-institutional-800 text-xs font-bold font-mono border border-institutional-200"
+                className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/10 text-neutral-200 text-xs font-bold font-mono border border-white/15"
                 title={`Signed in as ${currentUser.name}`}
               >
-                <User className="w-3.5 h-3.5 text-crest-navy" />
+                <User className="w-3.5 h-3.5 text-crest-gold" />
                 {currentUser.id}
               </span>
               <button
                 onClick={onLogout}
-                className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-red-700 hover:bg-red-50 border border-red-200 transition-colors flex items-center gap-1"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-red-400 hover:bg-red-500/10 border border-red-500/30 transition-colors flex items-center gap-1 cursor-pointer"
                 title="Sign out of the portal"
               >
                 <LogOut className="w-3.5 h-3.5" />
