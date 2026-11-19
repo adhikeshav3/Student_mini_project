@@ -68,6 +68,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
     priorityOption: PRIORITY_SLAS[0].label,
 
     // Case Particulars
+    subject: 'Examination and Hall Ticket Issue',
     incidentDate: new Date().toISOString().split('T')[0],
     reliefSought: '',
     isAnonymous: false
@@ -92,17 +93,13 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       setError('Please provide your contact phone number.');
       return;
     }
-    if (!formData.reliefSought.trim()) {
-      setError('Please specify the issue encountered and relief sought.');
-      return;
-    }
 
     // Match selected category object
     const matchedCategory = GRIEVANCE_CATEGORIES.find(c => c.label === formData.categoryOption);
-    const selectedCategory = matchedCategory ? matchedCategory.category : CATEGORIES.ACADEMIC;
+    const selectedCategory = matchedCategory ? matchedCategory.category : CATEGORIES.EXAMINATION;
 
-    const fullStatement = formData.reliefSought.trim();
-    const derivedSubject = fullStatement.length > 80 ? `${fullStatement.slice(0, 77)}...` : fullStatement;
+    const subjectText = formData.subject.trim() || 'Examination and Hall Ticket Issue';
+    const fullStatement = formData.reliefSought.trim() || subjectText;
 
     const newDocket = onSubmitGrievance({
       studentName: formData.studentName.trim(),
@@ -113,7 +110,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
       semester: `${formData.semester}, ${formData.program}`,
       category: selectedCategory,
       priority: formData.priorityOption,
-      subject: derivedSubject,
+      subject: subjectText,
       statement: fullStatement,
       incidentDate: formData.incidentDate,
       isAnonymous: formData.isAnonymous,
@@ -380,23 +377,56 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
 
         {/* Section 3: Grievance Details & Relief Sought */}
         <div className="space-y-4">
-          <div className="border-b border-white/[0.08] pb-2">
+          <div className="border-b border-white/[0.08] pb-2 flex items-center justify-between">
             <h2 className="text-xs uppercase tracking-[0.2em] font-mono text-neutral-400">
-              03 / Grievance Particulars & Relief Sought
+              03 / Grievance Particulars
             </h2>
+            <button
+              type="button"
+              onClick={() => {
+                setFormData(prev => ({
+                  ...prev,
+                  categoryOption: GRIEVANCE_CATEGORIES[0].label,
+                  priorityOption: PRIORITY_SLAS[1].label,
+                  subject: 'Examination and Hall Ticket Withheld',
+                  reliefSought: 'Request urgent issuance of provisional examination hall ticket and attendance reconciliation for upcoming exams.'
+                }));
+              }}
+              className="text-[11px] font-mono text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            >
+              ⚡ Fill Exam & Hall Ticket Example
+            </button>
           </div>
 
-          {/* Date of Incident */}
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
-              Date of Incident
-            </label>
-            <input
-              type="date"
-              value={formData.incidentDate}
-              onChange={(e) => handleInputChange('incidentDate', e.target.value)}
-              className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white/30 transition-colors font-mono"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            {/* Subject (2 Columns) */}
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
+                Subject <span className="text-white/40">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.subject}
+                onChange={(e) => handleInputChange('subject', e.target.value)}
+                placeholder="e.g. Examination and Hall Ticket Issue"
+                className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors"
+              />
+            </div>
+
+            {/* Date of Incident (1 Column) */}
+            <div>
+              <label className="block text-xs uppercase tracking-wider text-neutral-400 font-medium mb-2">
+                Date of Incident
+              </label>
+              <input
+                type="date"
+                value={formData.incidentDate}
+                onChange={(e) => handleInputChange('incidentDate', e.target.value)}
+                className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white/30 transition-colors font-mono"
+              />
+            </div>
+
           </div>
 
           {/* Specific Remedy / Relief Sought */}
@@ -408,7 +438,7 @@ export default function GrievanceForm({ currentUser, onSubmitGrievance, onTrackG
               rows={3}
               value={formData.reliefSought}
               onChange={(e) => handleInputChange('reliefSought', e.target.value)}
-              placeholder="Specify the issue encountered and the exact administrative remedy sought..."
+              placeholder="e.g. Issue provisional examination hall ticket and reconcile attendance records..."
               className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-colors resize-none leading-relaxed"
             />
           </div>
